@@ -1,4 +1,4 @@
-package com.example.javabackendlearningcoursecurrencyexchangeproject;
+package com.example.javaBackendLearningCourseCurrencyExchangeProject;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
