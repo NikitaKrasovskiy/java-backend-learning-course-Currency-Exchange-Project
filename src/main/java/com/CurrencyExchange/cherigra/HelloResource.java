@@ -1,4 +1,4 @@
-package com.example.javaBackendLearningCourseCurrencyExchangeProject;
+package com.CurrencyExchange.cherigra;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
