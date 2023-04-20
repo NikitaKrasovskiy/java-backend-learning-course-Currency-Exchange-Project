@@ -1,5 +1,7 @@
 package com.CurrencyExchange.cherigra.entity;
 
+import java.util.Objects;
+
 public class Currencies {
 	private Integer id;
 	private String code;
@@ -43,5 +45,28 @@ public class Currencies {
 	
 	public void setSign(String sign) {
 		this.sign = sign;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Currencies that = (Currencies) o;
+		return Objects.equals(id, that.id);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+	
+	@Override
+	public String toString() {
+		return "Currencies{" +
+				"id=" + id +
+				", code='" + code + '\'' +
+				", fullName='" + fullName + '\'' +
+				", sign='" + sign + '\'' +
+				'}';
 	}
 }
