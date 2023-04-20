@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="java-backend-learning-course-Currency-Exchange-Project:Web">
+    <output-path>$PROJECT_DIR$/out/artifacts/java_backend_learning_course_Currency_Exchange_Project_Web</output-path>
+    <root id="archive" name="java-backend-learning-course-Currency-Exchange-Project_Web.war">
+      <element id="artifact" artifact-name="java-backend-learning-course-Currency-Exchange-Project:Web exploded" />
+    </root>
+  </artifact>
+</component>
