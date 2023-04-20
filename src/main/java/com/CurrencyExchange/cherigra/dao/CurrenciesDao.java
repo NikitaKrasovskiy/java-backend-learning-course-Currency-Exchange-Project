@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class CurrenciesDao implements Dao<Integer, Currencies>{
 	
-	
+	private static final CurrenciesDao INSTANCE = new CurrenciesDao();
 	public static final String FIND_ALL = """
 						SELECT id,
 						code,
@@ -20,6 +20,9 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 						sign
 						FROM currencies
 			""";
+	
+	private CurrenciesDao() {
+	}
 	
 	@Override
 	public List<Currencies> findAll() {
@@ -40,6 +43,10 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	public static CurrenciesDao getInstance() {
+		return INSTANCE;
 	}
 	
 	@Override
