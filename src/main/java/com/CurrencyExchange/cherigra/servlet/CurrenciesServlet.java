@@ -15,18 +15,22 @@ import java.nio.charset.StandardCharsets;
 public class CurrenciesServlet extends HttpServlet {
 	
 	private final CurrenciesService currenciesService = CurrenciesService.getInstance();
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/json");
-		resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
+//		resp.setContentType("text/json");
+//		resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
+//
+//		try (var printWriter = resp.getWriter()) {
+//			currenciesService.findAll().forEach(currenciesDto -> {
+//				printWriter.write("TESST HELLO WORLD");
+//			});
+//
+//		}
+//	}
+		resp.setContentType("text/html");
 		
-		try (var printWriter = resp.getWriter()) {
-			currenciesService.findAll().forEach(currenciesDto -> {
-				printWriter.write(currenciesDto.getId());
-				printWriter.write(currenciesDto.getCode());
-				printWriter.write(currenciesDto.getFullName());
-				printWriter.write(currenciesDto.getSign());
-			});
-		}
+		PrintWriter writer = resp.getWriter();
+		writer.write("TESTETSTTETETSTETSTTETSTTETS");
 	}
 }

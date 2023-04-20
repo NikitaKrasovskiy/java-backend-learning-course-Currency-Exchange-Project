@@ -14,14 +14,30 @@ ext {
     junitVersion = '5.9.2'
 }
 
-sourceCompatibility = '17'
-targetCompatibility = '17'
+//sourceCompatibility = '17'
+//targetCompatibility = '17'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+war {
+    archiveName "cherigra.war"
+}
+task deployTomcat(type: Copy) {
+    from(war.archiveFile.get())
+    into("/Users/cherigra/goinfre/apache-tomcat-9.0.74/webapps")
+}
+
+deployTomcat.dependsOn war
+assemble.dependsOn deployTomcat
 dependencies {
+    compileOnly "jakarta.servlet:jakarta.servlet-api:5.0.0"
     compileOnly(providedCompile 'javax.servlet:javax.servlet-api:4.0.1')
     compileOnly('com.google.code.maven-play-plugin.postgresql:postgresql:9.0-801.jdbc4-patched-play-1.2.3')
 
@@ -31,3 +47,5 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+

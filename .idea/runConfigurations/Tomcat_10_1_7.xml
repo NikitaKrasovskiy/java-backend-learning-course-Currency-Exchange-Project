@@ -82,9 +82,7 @@
     </ConfigurationWrapper>
     <method v="2">
       <option name="Make" enabled="true" />
-      <option name="BuildArtifacts" enabled="true">
-        <artifact name="Gradle : com.example : java-backend-learning-course-Currency-Exchange-Project-1.0-SNAPSHOT.war (exploded)" />
-      </option>
+      <option name="BuildArtifacts" enabled="true" />
     </method>
   </configuration>
 </component>
