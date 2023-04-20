@@ -4,11 +4,22 @@ CREATE TABLE currencies
 (
     id       SERIAL PRIMARY KEY, -- Айди валюты, автоинкремент, первичный ключ
     code     VARCHAR(128) UNIQUE NOT NULL, --Код валюты
-    fullName VARCHAR(128)        NOT NULL, -- Полное имя валюты
-    Sign     VARCHAR(128)        NOT NULL  --  Символ валюты
+    full_name VARCHAR(128)        NOT NULL, -- Полное имя валюты
+    sign     VARCHAR(128)        NOT NULL  --  Символ валюты
 );
 
 DROP TABLE  currencies;
+
+CREATE TABLE exchange_rates
+(
+    id               INT PRIMARY KEY,  -- Айди валюты, автоинкремент, первичный ключ
+    base_currency_id   INT REFERENCES currencies (id)  NOT NULL, --Код валюты
+    target_currency_id INT  REFERENCES currencies (id)    NOT NULL, -- Полное имя валюты
+    rate             DECIMAL NOT NULL,  --  Символ валюты
+    UNIQUE(base_currency_id, target_currency_id)
+);
+
+-- TODO сделал вторую таблицу, исправил наимование таблиц
 
 
 -- D	int	Айди валюты, автоинкремент, первичный ключ
