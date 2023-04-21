@@ -15,6 +15,8 @@ public class CurrenciesService {
 	
 	private final CurrenciesDao currenciesDao = CurrenciesDao.getInstance();
 	
+	public CurrenciesService() {
+	}
 	
 	public List<CurrenciesDto> findAll() {
 		return currenciesDao.findAll().stream()

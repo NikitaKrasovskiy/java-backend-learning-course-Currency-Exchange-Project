@@ -27,11 +27,17 @@ java {
 }
 dependencies {
     compileOnly "jakarta.servlet:jakarta.servlet-api:5.0.0"
-//    compileOnly(providedCompile 'javax.servlet:javax.servlet-api:4.0.1')
-    compileOnly('com.google.code.maven-play-plugin.postgresql:postgresql:9.0-801.jdbc4-patched-play-1.2.3')
+
+    implementation 'org.postgresql:postgresql:42.5.4'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+
+    // a dependency on Jackson Databind
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+
+    // and a dependency on vert.x
+    implementation 'io.vertx:vertx-core:4.4.0'
 }
 test {
     useJUnitPlatform()
