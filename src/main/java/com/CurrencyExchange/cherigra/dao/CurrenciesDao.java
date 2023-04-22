@@ -24,8 +24,6 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
    				sign = ?
    			where id = ?
 			""";
-
-
 	public static final String FIND_BY_ID_SQL = """
    			select id,
    					code,
@@ -34,7 +32,6 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
    			from currencies
    			where id = ?
 			""";
-
 	public static final String FIND_BY_CODE_SQL = """
    			select id,
    					code,
@@ -44,8 +41,6 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
    			where code = ?
 			""";
 
-	
-	
 	@Override
 	public List<Currencies> findAll() {
 		try (var connection = ConnectionManager.get();
@@ -104,12 +99,6 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 	public Currencies save(Currencies entity) {
 		return null;
 	}
-
-	//			resultSet.getObject("id", Integer.class),
-//			resultSet.getObject("code", String.class),
-//			resultSet.getObject("full_name", String.class),
-//			resultSet.getObject("sign", String.class));
-
 	public Optional<Currencies> findByCode(String code) {
 		try (var connection = ConnectionManager.get();
 			 var prepareStatement = connection.prepareStatement(FIND_BY_CODE_SQL)) {

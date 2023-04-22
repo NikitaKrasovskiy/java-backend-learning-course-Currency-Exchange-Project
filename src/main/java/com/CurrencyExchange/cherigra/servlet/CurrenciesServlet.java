@@ -31,9 +31,5 @@ public class CurrenciesServlet extends HttpServlet {
 			List<CurrenciesDto> currencies = currenciesService.findAll();
 			mapper.writeValue(resp.getWriter(), currencies);
 	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	}
 }
 
