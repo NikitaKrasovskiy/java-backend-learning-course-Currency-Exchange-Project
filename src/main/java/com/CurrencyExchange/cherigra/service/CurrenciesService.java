@@ -2,10 +2,10 @@ package com.CurrencyExchange.cherigra.service;
 
 import com.CurrencyExchange.cherigra.dao.CurrenciesDao;
 import com.CurrencyExchange.cherigra.dto.CurrenciesDto;
+import com.CurrencyExchange.cherigra.entity.Currencies;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -27,6 +27,10 @@ public class CurrenciesService {
 						currencies.getSign()
 				)).collect(toList());
 	}
+
+//	public Optional<Currencies> findById(int id) {
+//		return currenciesDao.findById(id);
+//	}
 	
 	
 	public static CurrenciesService getInstance() {

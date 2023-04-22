@@ -16,6 +16,34 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 						SELECT *
 						FROM currencies
 			""";
+
+	public static final String UPDATE_SQL = """
+   			update currencies
+   			set code = ?,
+   				full_name = ?,
+   				sign = ?
+   			where id = ?
+			""";
+
+
+	public static final String FIND_BY_ID_SQL = """
+   			select id,
+   					code,
+   					full_name,
+   					sign
+   			from currencies
+   			where id = ?
+			""";
+
+	public static final String FIND_BY_CODE_SQL = """
+   			select id,
+   					code,
+   					full_name,
+   					sign
+   			from currencies
+   			where code = ?
+			""";
+
 	
 	
 	@Override
@@ -35,7 +63,23 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 	
 	@Override
 	public Optional<Currencies> findById(Integer id) {
-		return Optional.empty();
+		try (var connection = ConnectionManager.get();
+			 var prepareStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
+			prepareStatement.setObject(1, id);
+			var resultSet = prepareStatement.executeQuery();
+			Currencies currencies = null;
+			if (resultSet.next()) {
+				currencies = new Currencies(
+				resultSet.getInt("id"),
+				resultSet.getString("code"),
+				resultSet.getString("full_name"),
+				resultSet.getString("sign")
+				);
+			}
+			return Optional.ofNullable(currencies);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	@Override
@@ -45,12 +89,47 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 	
 	@Override
 	public void update(Currencies entity) {
-	
+		try (var connection = ConnectionManager.get();
+			 var prepareStatement = connection.prepareStatement(UPDATE_SQL)) {
+			prepareStatement.setObject(1, entity.getCode());
+			prepareStatement.setObject(2, entity.getFullName());
+			prepareStatement.setObject(3, entity.getSign());
+
+			prepareStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
-	
 	@Override
 	public Currencies save(Currencies entity) {
 		return null;
+	}
+
+	//			resultSet.getObject("id", Integer.class),
+//			resultSet.getObject("code", String.class),
+//			resultSet.getObject("full_name", String.class),
+//			resultSet.getObject("sign", String.class));
+
+	public Optional<Currencies> findByCode(String code) {
+		try (var connection = ConnectionManager.get();
+			 var prepareStatement = connection.prepareStatement(FIND_BY_CODE_SQL)) {
+			prepareStatement.setObject(1, code);
+			Currencies currencies = null;
+
+			var resultSet = prepareStatement.executeQuery();
+
+			if (resultSet.next()) {
+				currencies = new Currencies(
+						resultSet.getInt("id"),
+						resultSet.getString("code"),
+						resultSet.getString("full_name"),
+						resultSet.getString("sign")
+				);
+			}
+			return Optional.ofNullable(currencies);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public static CurrenciesDao getInstance() {
