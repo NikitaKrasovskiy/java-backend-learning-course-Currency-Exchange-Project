@@ -27,12 +27,6 @@ public class CurrenciesService {
 						currencies.getSign()
 				)).collect(toList());
 	}
-
-//	public Optional<Currencies> findById(int id) {
-//		return currenciesDao.findById(id);
-//	}
-	
-	
 	public static CurrenciesService getInstance() {
 		return INSTANCE;
 	}

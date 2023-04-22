@@ -19,26 +19,26 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 
 	public static final String UPDATE_SQL = """
    			update currencies
-   			set code = ?,
-   				full_name = ?,
-   				sign = ?
-   			where id = ?
+						set code = ?,
+							full_name = ?,
+							sign = ?
+						where id = ?
 			""";
 	public static final String FIND_BY_ID_SQL = """
    			select id,
-   					code,
-   					full_name,
-   					sign
-   			from currencies
-   			where id = ?
+								code,
+								full_name,
+								sign
+						from currencies
+						where id = ?
 			""";
 	public static final String FIND_BY_CODE_SQL = """
    			select id,
-   					code,
-   					full_name,
-   					sign
-   			from currencies
-   			where code = ?
+								code,
+								full_name,
+								sign
+						from currencies
+						where code = ?
 			""";
 
 	@Override
