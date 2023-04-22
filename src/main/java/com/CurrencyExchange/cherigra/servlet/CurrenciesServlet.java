@@ -29,8 +29,7 @@ public class CurrenciesServlet extends HttpServlet {
 		resp.setContentType("text/json");
 		resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
 			List<CurrenciesDto> currencies = currenciesService.findAll();
-//			mapper.writeValue(resp.getWriter(), currencies + "test");
-			mapper.writeValueAsString(currencies);
+			mapper.writeValue(resp.getWriter(), currencies);
 	}
 }
 
