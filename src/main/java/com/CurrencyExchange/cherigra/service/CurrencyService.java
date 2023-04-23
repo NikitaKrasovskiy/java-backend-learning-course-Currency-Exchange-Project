@@ -14,7 +14,7 @@ public class CurrencyService {
     private final CurrenciesDao currenciesDao = CurrenciesDao.getInstance();
 
 
-    	public List<CurrenciesDto> findById(String code) {
+    	public List<CurrenciesDto> findByCode(String code) {
             return currenciesDao.findByCode(code).stream()
                     .map(currencies -> new CurrenciesDto(
                             currencies.getId(),

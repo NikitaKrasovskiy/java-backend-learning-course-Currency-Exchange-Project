@@ -23,7 +23,7 @@ public class CurrencyServlet extends HttpServlet {
         String code = req.getPathInfo().replaceAll("/", "");
         resp.setContentType("text/json");
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        List<CurrenciesDto> optionalCurrencies = currencyService.findById(code);
+        List<CurrenciesDto> optionalCurrencies = currencyService.findByCode(code);
         mapper.writeValue(resp.getWriter(), optionalCurrencies);
     }
 }
