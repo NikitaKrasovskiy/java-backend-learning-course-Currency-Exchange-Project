@@ -30,7 +30,7 @@ public class CurrenciesServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String name = req.getParameter("name");
+		String name = req.getParameter("name");  ////TODO нужен рефактор
 		String code = req.getParameter("code");
 		String sign = req.getParameter("sign");
 

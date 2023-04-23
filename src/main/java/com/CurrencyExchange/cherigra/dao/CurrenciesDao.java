@@ -70,7 +70,7 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 			var resultSet = prepareStatement.executeQuery();
 			Currencies currencies = null;
 			if (resultSet.next()) {
-				currencies = new Currencies(
+				currencies = new Currencies(   //TODO нужен рефактор
 				resultSet.getInt("id"),
 				resultSet.getString("code"),
 				resultSet.getString("full_name"),
@@ -92,7 +92,8 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 	public void update(Currencies entity) {
 		try (var connection = ConnectionManager.get();
 			 var prepareStatement = connection.prepareStatement(UPDATE_SQL)) {
-			prepareStatement.setObject(1, entity.getCode());
+
+			prepareStatement.setObject(1, entity.getCode());  //TODO нужен рефактор
 			prepareStatement.setObject(2, entity.getFullName());
 			prepareStatement.setObject(3, entity.getSign());
 
@@ -106,7 +107,7 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 		try (var connection = ConnectionManager.get();
 			 var prepareStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
 
-			prepareStatement.setObject(1, entity.getCode());
+			prepareStatement.setObject(1, entity.getCode());  //TODO нужен рефактор
 			prepareStatement.setObject(2, entity.getFullName());
 			prepareStatement.setObject(3, entity.getSign());
 
@@ -130,7 +131,7 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 			var resultSet = prepareStatement.executeQuery();
 
 			if (resultSet.next()) {
-				currencies = new Currencies(
+				currencies = new Currencies(   //TODO нужен рефактор
 						resultSet.getInt("id"),
 						resultSet.getString("code"),
 						resultSet.getString("full_name"),
