@@ -13,9 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
-
-
 @WebServlet("/currencies")
 public class CurrenciesServlet extends HttpServlet {
 	
