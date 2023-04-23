@@ -41,7 +41,6 @@ public class CurrenciesServlet extends HttpServlet {
 
 		List<CurrenciesDto> optionalCurrencies = currenciesService.findById(id);
 		mapper.writeValue(resp.getWriter(), optionalCurrencies);
-
 	}
 }
 
