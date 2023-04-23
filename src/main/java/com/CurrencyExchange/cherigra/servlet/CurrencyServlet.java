@@ -22,7 +22,8 @@ public class CurrencyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String code = req.getPathInfo().replaceAll("/", "");
         resp.setContentType("text/json");
-        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        resp.setCharacterEncoding(StandardCharsets.UTF_8.name()); // TODO  надо добавить общий фильтр для сервлетов
+                                                                    // TODO нужно на всех сервлетах сделать валидацию
         List<CurrenciesDto> optionalCurrencies = currencyService.findByCode(code);
         mapper.writeValue(resp.getWriter(), optionalCurrencies);
     }
