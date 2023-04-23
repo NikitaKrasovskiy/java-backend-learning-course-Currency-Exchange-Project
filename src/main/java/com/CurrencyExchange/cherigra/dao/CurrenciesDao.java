@@ -5,6 +5,7 @@ import com.CurrencyExchange.cherigra.util.ConnectionManager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,11 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 								sign
 						from currencies
 						where code = ?
+			""";
+
+	public static final String INSERT_SQL = """
+   			insert into currencies (code, full_name, sign)
+   			values (?, ?, ?)
 			""";
 
 	@Override
@@ -97,7 +103,23 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 	}
 	@Override
 	public Currencies save(Currencies entity) {
-		return null;
+		try (var connection = ConnectionManager.get();
+			 var prepareStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
+
+			prepareStatement.setObject(1, entity.getCode());
+			prepareStatement.setObject(2, entity.getFullName());
+			prepareStatement.setObject(3, entity.getSign());
+
+			prepareStatement.executeUpdate();
+
+			var generatedKeys = prepareStatement.getGeneratedKeys();
+			if (generatedKeys.next()) {
+				entity.setId(generatedKeys.getInt("id"));
+			}
+			return entity;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	public Optional<Currencies> findByCode(String code) {
 		try (var connection = ConnectionManager.get();
