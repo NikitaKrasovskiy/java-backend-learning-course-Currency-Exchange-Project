@@ -3,10 +3,10 @@ package com.CurrencyExchange.cherigra.dto;
 import java.util.Objects;
 
 public class CurrenciesDto {
-	Integer id;
-	String code;
-	String fullName;
-	String sign;
+	private Integer id;
+	private String code;
+	private String fullName;
+	private String sign;
 
 	public CurrenciesDto(Integer id, String code, String fullName, String sign) {
 		this.id = id;
@@ -20,7 +20,7 @@ public class CurrenciesDto {
 		this.fullName = fullName;
 		this.sign = sign;
 	}
-	CurrenciesDto() {
+	public CurrenciesDto() {
 
 	}
 

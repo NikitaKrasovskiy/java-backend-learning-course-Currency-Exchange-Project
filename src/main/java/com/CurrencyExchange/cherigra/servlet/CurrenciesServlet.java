@@ -1,6 +1,5 @@
 package com.CurrencyExchange.cherigra.servlet;
 
-import com.CurrencyExchange.cherigra.dao.CurrenciesDao;
 import com.CurrencyExchange.cherigra.dto.CurrenciesDto;
 import com.CurrencyExchange.cherigra.entity.Currencies;
 import com.CurrencyExchange.cherigra.service.CurrenciesService;
@@ -30,6 +29,19 @@ public class CurrenciesServlet extends HttpServlet {
 		resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
 			List<CurrenciesDto> currencies = currenciesService.findAll();
 			mapper.writeValue(resp.getWriter(), currencies);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String name = req.getParameter("name");
+		String code = req.getParameter("code");
+		String sign = req.getParameter("sign");
+
+		Integer id = currenciesService.save(name, code, sign);
+
+		List<CurrenciesDto> optionalCurrencies = currenciesService.findById(id);
+		mapper.writeValue(resp.getWriter(), optionalCurrencies);
+
 	}
 }
 

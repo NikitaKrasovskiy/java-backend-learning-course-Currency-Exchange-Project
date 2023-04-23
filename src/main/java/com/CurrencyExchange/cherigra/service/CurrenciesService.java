@@ -17,7 +17,6 @@ public class CurrenciesService {
 	
 	public CurrenciesService() {
 	}
-	
 	public List<CurrenciesDto> findAll() {
 		return currenciesDao.findAll().stream()
 				.map(currencies -> new CurrenciesDto(
@@ -27,6 +26,23 @@ public class CurrenciesService {
 						currencies.getSign()
 				)).collect(toList());
 	}
+
+	public List<CurrenciesDto> findById(Integer id) {
+		return currenciesDao.findById(id).stream()
+				.map(currencies -> new CurrenciesDto(
+						currencies.getId(),
+						currencies.getCode(),
+						currencies.getFullName(),
+						currencies.getSign()
+				)).collect(toList());
+	}
+
+	public Integer save(String code, String fullName, String sign) {
+		var currencies = new Currencies(code, fullName, sign);
+		currenciesDao.save(currencies);
+		return currencies.getId();
+	}
+
 	public static CurrenciesService getInstance() {
 		return INSTANCE;
 	}
