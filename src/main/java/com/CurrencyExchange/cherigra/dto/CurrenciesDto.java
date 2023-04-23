@@ -2,8 +2,27 @@ package com.CurrencyExchange.cherigra.dto;
 
 import java.util.Objects;
 
-public record CurrenciesDto(Integer id, String code, String fullName, String sign) {
+public class CurrenciesDto {
+	Integer id;
+	String code;
+	String fullName;
+	String sign;
 
+	public CurrenciesDto(Integer id, String code, String fullName, String sign) {
+		this.id = id;
+		this.code = code;
+		this.fullName = fullName;
+		this.sign = sign;
+	}
+
+	public CurrenciesDto(String code, String fullName, String sign) {
+		this.code = code;
+		this.fullName = fullName;
+		this.sign = sign;
+	}
+	CurrenciesDto() {
+
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -26,5 +45,38 @@ public record CurrenciesDto(Integer id, String code, String fullName, String sig
 				", fullName='" + fullName + '\'' +
 				", sign='" + sign + '\'' +
 				'}';
+	}
+
+	public Integer getId() {
+
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getSign() {
+		return sign;
+	}
+
+	public void setSign(String sign) {
+		this.sign = sign;
 	}
 }
