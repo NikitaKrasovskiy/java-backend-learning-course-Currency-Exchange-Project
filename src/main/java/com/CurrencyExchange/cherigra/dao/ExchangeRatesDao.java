@@ -1,7 +1,11 @@
 package com.CurrencyExchange.cherigra.dao;
 
+import com.CurrencyExchange.cherigra.entity.Currencies;
 import com.CurrencyExchange.cherigra.entity.ExchangeRates;
+import com.CurrencyExchange.cherigra.util.ConnectionManager;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +29,33 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
 
     @Override
     public List<ExchangeRates> findAll() {
-        return null;
+        try (var connection = ConnectionManager.get();
+             var prepareStatement = connection.prepareStatement(FIND_ALL_SQL)) {
+            var resultSet = prepareStatement.executeQuery();
+            List<ExchangeRates> currencies = null;
+            while (resultSet.next()) {
+                currencies.add(getEchange(resultSet));
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private ExchangeRates getEchange(ResultSet resultSet) throws SQLException {
+        return new ExchangeRates(resultSet.getInt("id"),
+        new Currencies(
+                resultSet.getObject("base_id", Integer.class),
+                resultSet.getObject("base_code", String.class),
+                resultSet.getObject("base_full_name", String.class),
+                resultSet.getObject("base_sign", String.class)
+        ),
+                new Currencies(
+                        resultSet.getObject("target_id", Integer.class),
+                        resultSet.getObject("target_code", String.class),
+                        resultSet.getObject("target_full_name", String.class),
+                        resultSet.getObject("target_sign", String.class)
+                ), resultSet.getBigDecimal("rate"));
     }
 
     @Override
