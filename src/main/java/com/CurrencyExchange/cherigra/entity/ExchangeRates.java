@@ -15,9 +15,6 @@ public class ExchangeRates {
         this.targetCurrencyId = targetCurrencyId;
         this.rate = rate;
     }
-    ExchangeRates() {
-
-    }
 
     @Override
     public String toString() {
