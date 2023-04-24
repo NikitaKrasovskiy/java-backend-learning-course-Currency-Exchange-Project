@@ -1,14 +1,16 @@
 package com.CurrencyExchange.cherigra.dto;
 
+import com.CurrencyExchange.cherigra.entity.Currencies;
+
 import java.math.BigDecimal;
 
 public class ExchangeRatesDto {
     private Integer id;
-    private Integer baseCurrencyId;
-    private Integer targetCurrencyId;
+    private Currencies baseCurrencyId;
+    private Currencies targetCurrencyId;
     private BigDecimal rate;
 
-    public ExchangeRatesDto(Integer id, Integer baseCurrencyId, Integer targetCurrencyId, BigDecimal rate) {
+    public ExchangeRatesDto(Integer id, Currencies baseCurrencyId, Currencies targetCurrencyId, BigDecimal rate) {
         this.id = id;
         this.baseCurrencyId = baseCurrencyId;
         this.targetCurrencyId = targetCurrencyId;
@@ -35,19 +37,19 @@ public class ExchangeRatesDto {
         this.id = id;
     }
 
-    public Integer getBaseCurrencyId() {
+    public Currencies getBaseCurrencyId() {
         return baseCurrencyId;
     }
 
-    public void setBaseCurrencyId(Integer baseCurrencyId) {
+    public void setBaseCurrencyId(Currencies baseCurrencyId) {
         this.baseCurrencyId = baseCurrencyId;
     }
 
-    public Integer getTargetCurrencyId() {
+    public Currencies getTargetCurrencyId() {
         return targetCurrencyId;
     }
 
-    public void setTargetCurrencyId(Integer targetCurrencyId) {
+    public void setTargetCurrencyId(Currencies targetCurrencyId) {
         this.targetCurrencyId = targetCurrencyId;
     }
 
