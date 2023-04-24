@@ -98,12 +98,7 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
             var resultSet = prepareStatement.executeQuery();
 
             if (resultSet.next()) {
-                exchangeRates = new ExchangeRates(
-                        resultSet.getInt("id"),
-                        (Currencies) resultSet.getObject("base_currency_id"),
-                        (Currencies) resultSet.getObject("target_currency_id"),
-                        resultSet.getBigDecimal("rate")
-                );
+                exchangeRates = getExchange(resultSet);
             }
             return Optional.ofNullable(exchangeRates);
         } catch (SQLException e) {
