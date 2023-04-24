@@ -56,7 +56,7 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
                 resultSet.getObject("base_id", Integer.class),
                 resultSet.getObject("base_code", String.class),
                 resultSet.getObject("base_full_name", String.class),
-                resultSet.getObject("base_sign", String.class)
+                resultSet.getObject("base_sing", String.class)
         ),
                 new Currencies(
                         resultSet.getObject("target_id", Integer.class),
