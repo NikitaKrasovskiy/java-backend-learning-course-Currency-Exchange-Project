@@ -1,6 +1,7 @@
 package com.CurrencyExchange.cherigra.entity;
 
 import java.math.BigDecimal;
+import java.nio.file.Path;
 
 public class ExchangeRates {
 
@@ -11,6 +12,12 @@ public class ExchangeRates {
 
     public ExchangeRates(Integer id, Currencies baseCurrencyId, Currencies targetCurrencyId, BigDecimal rate) {
         this.id = id;
+        this.baseCurrencyId = baseCurrencyId;
+        this.targetCurrencyId = targetCurrencyId;
+        this.rate = rate;
+    }
+
+    public ExchangeRates(Currencies baseCurrencyId, Currencies targetCurrencyId, BigDecimal rate) {
         this.baseCurrencyId = baseCurrencyId;
         this.targetCurrencyId = targetCurrencyId;
         this.rate = rate;

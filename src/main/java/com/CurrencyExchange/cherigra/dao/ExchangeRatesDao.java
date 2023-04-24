@@ -6,6 +6,7 @@ import com.CurrencyExchange.cherigra.util.ConnectionManager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +54,29 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
                                                     base_currency_id = (SELECT c.id FROM currencies c WHERE c.code = ?) AND
                                                     target_currency_id = (SELECT c2.id FROM currencies c2 WHERE c2.code = ?)
                                                 )
+            """;
+
+    private static final String INSERT_SQL = """
+            insert into currencies (base_currency_id,target_currency_id, rate)
+            values (?, ?, ?)
+            """;
+    final String query =
+            """
+                SELECT
+                    er.id AS id,
+                    bc.id AS base_id,
+                    bc.code AS base_code,
+                    bc.full_name AS base_name,
+                    bc.sign AS base_sign,
+                    tc.id AS target_id,
+                    tc.code AS target_code,
+                    tc.full_name AS target_name,
+                    tc.sign AS target_sign,
+                    er.rate AS rate
+                FROM exchange_rates er
+                JOIN currencies bc ON er.base_currency_id = bc.id
+                JOIN currencies tc ON er.target_currency_id = tc.id
+                WHERE er.id = ?
             """;
 
     @Override
@@ -107,7 +131,19 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
     }
         @Override
     public Optional<ExchangeRates> findById(Integer id) {
-        return Optional.empty();
+            try (var connection = ConnectionManager.get();
+                 var prepareStatement = connection.prepareStatement(query)) {
+                prepareStatement.setObject(1, id);
+                var resultSet = prepareStatement.executeQuery();
+//                Currencies currencies = null;
+                ExchangeRates exchangeRates = null;
+                if (resultSet.next()) {
+                    exchangeRates = getExchange(resultSet);
+                }
+                return Optional.ofNullable(exchangeRates);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
     }
 
     @Override
@@ -122,7 +158,21 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
 
     @Override
     public ExchangeRates save(ExchangeRates entity) {
-        return null;
+        try (var connection = ConnectionManager.get();
+             var prepareStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
+
+            prepareStatement.setObject(1, entity.getBaseCurrencyId());
+            prepareStatement.setObject(2, entity.getTargetCurrencyId());
+            prepareStatement.setObject(3, entity.getRate());
+
+            var generatedKeys = prepareStatement.getGeneratedKeys();
+            if(generatedKeys.next()) {
+                entity.setId(generatedKeys.getInt("id"));
+            }
+            return entity;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static ExchangeRatesDao getInstance() {

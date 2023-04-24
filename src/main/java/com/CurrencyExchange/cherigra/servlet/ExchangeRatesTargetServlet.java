@@ -1,7 +1,5 @@
 package com.CurrencyExchange.cherigra.servlet;
 
-import com.CurrencyExchange.cherigra.dto.ExchangeRatesDto;
-import com.CurrencyExchange.cherigra.service.ExchangeRatesService;
 import com.CurrencyExchange.cherigra.service.ExchangeRatesTargetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
@@ -12,7 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 
 @WebServlet("/exchangeRates/*")

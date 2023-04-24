@@ -27,4 +27,17 @@ public class ExchangeRatesServlet extends HttpServlet {
         List<ExchangeRatesDto> exchangeList = exchangeRatesService.findAll();
         mapper.writeValue(resp.getWriter(), exchangeList);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String baseCurrencyCode = req.getParameter("baseCurrencyCode");
+        String targetCurrencyCode = req.getParameter("targetCurrencyCode");
+        String rate = req.getParameter("rate");
+
+        Integer save = exchangeRatesService.save(baseCurrencyCode, targetCurrencyCode, rate);
+
+        List<ExchangeRatesDto> optionalCurrencies = exchangeRatesService.findById(save);
+        mapper.writeValue(resp.getWriter(), optionalCurrencies);
+
+    }
 }
