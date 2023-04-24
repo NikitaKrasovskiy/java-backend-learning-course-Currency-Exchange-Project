@@ -29,7 +29,8 @@ public class ExchangeRatesTargetServlet  extends HttpServlet {
         String baseCurrencyCode = url.substring(0, 3);
         String targetCurrencyCode = url.substring(3);
         var  byCodes = exchangeRatesTargetService.findByCodes(baseCurrencyCode, targetCurrencyCode);
-
+//        mapper.writeValue(resp.getWriter(), baseCurrencyCode);
+        mapper.writeValue(resp.getWriter(), targetCurrencyCode);
         mapper.writeValue(resp.getWriter(), byCodes);
     }
 }
