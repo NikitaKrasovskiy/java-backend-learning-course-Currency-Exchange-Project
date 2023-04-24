@@ -13,6 +13,10 @@ import java.util.Optional;
 public class CurrenciesDao implements Dao<Integer, Currencies>{
 	
 	private static final CurrenciesDao INSTANCE = new CurrenciesDao();
+
+	private void Currencies() {
+
+	}
 	public static final String FIND_ALL = """
 						SELECT *
 						FROM currencies

@@ -12,6 +12,13 @@ import java.util.Optional;
 
 public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
 
+
+    private static final ExchangeRatesDao INSTANCE = new ExchangeRatesDao();
+
+    private void ExchangeRatesDao() {
+
+    }
+
     private final String FIND_ALL_SQL = """
             select ex_rates.id AS id,
                     currencies_1.id AS base_id
@@ -77,5 +84,9 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
     @Override
     public ExchangeRates save(ExchangeRates entity) {
         return null;
+    }
+
+    public static ExchangeRatesDao getInstance() {
+        return INSTANCE;
     }
 }
