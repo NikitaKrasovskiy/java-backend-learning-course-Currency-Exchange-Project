@@ -6,6 +6,7 @@ import com.CurrencyExchange.cherigra.util.ConnectionManager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,17 +33,17 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
         try (var connection = ConnectionManager.get();
              var prepareStatement = connection.prepareStatement(FIND_ALL_SQL)) {
             var resultSet = prepareStatement.executeQuery();
-            List<ExchangeRates> currencies = null;
+            List<ExchangeRates> currencies = new ArrayList<>();
             while (resultSet.next()) {
-                currencies.add(getEchange(resultSet));
+                currencies.add(getExchange(resultSet));
             }
-            return null;
+            return currencies;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private ExchangeRates getEchange(ResultSet resultSet) throws SQLException {
+    private ExchangeRates getExchange(ResultSet resultSet) throws SQLException {  // TODO нужно переместить в низ, нужно рефактор названия
         return new ExchangeRates(resultSet.getInt("id"),
         new Currencies(
                 resultSet.getObject("base_id", Integer.class),
