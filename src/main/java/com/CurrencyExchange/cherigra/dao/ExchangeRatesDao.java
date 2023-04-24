@@ -40,11 +40,11 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
         try (var connection = ConnectionManager.get();
              var prepareStatement = connection.prepareStatement(FIND_ALL_SQL)) {
             var resultSet = prepareStatement.executeQuery();
-            List<ExchangeRates> currencies = new ArrayList<>();
+            List<ExchangeRates> exchangeRates = new ArrayList<>();
             while (resultSet.next()) {
-                currencies.add(getExchange(resultSet));
+                exchangeRates.add(getExchange(resultSet));
             }
-            return currencies;
+            return exchangeRates;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
