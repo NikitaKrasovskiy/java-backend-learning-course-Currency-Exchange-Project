@@ -8,7 +8,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class ExchangeRatesTargetService {
-    private static final ExchangeRatesService INSTANCE = new ExchangeRatesService();
+    private static final ExchangeRatesTargetService INSTANCE = new ExchangeRatesTargetService();
 
     private final ExchangeRatesDao currenciesDao = ExchangeRatesDao.getInstance();
 
@@ -21,7 +21,7 @@ public class ExchangeRatesTargetService {
                         exchangeRates.getRate()
                 )).collect(toList());
     }
-    public static ExchangeRatesService getInstance() {
+    public static ExchangeRatesTargetService getInstance() {
         return INSTANCE;
     }
 }
