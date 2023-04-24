@@ -57,7 +57,7 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
             """;
 
     private static final String INSERT_SQL = """
-            insert into currencies (base_currency_id,target_currency_id, rate)
+            insert into exchange_rates (base_currency_id, target_currency_id, rate)
             values (?, ?, ?)
             """;
     final String query =
@@ -66,11 +66,11 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
                     er.id AS id,
                     bc.id AS base_id,
                     bc.code AS base_code,
-                    bc.full_name AS base_name,
+                    bc.full_name AS base_full_name,
                     bc.sign AS base_sign,
                     tc.id AS target_id,
                     tc.code AS target_code,
-                    tc.full_name AS target_name,
+                    tc.full_name AS target_full_name,
                     tc.sign AS target_sign,
                     er.rate AS rate
                 FROM exchange_rates er
@@ -97,16 +97,16 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
     private ExchangeRates getExchange(ResultSet resultSet) throws SQLException {  // TODO нужно переместить в низ, нужно рефактор названия
         return new ExchangeRates(resultSet.getInt("id"),
         new Currencies(
-                resultSet.getObject("base_id", Integer.class),
-                resultSet.getObject("base_code", String.class),
-                resultSet.getObject("base_full_name", String.class),
-                resultSet.getObject("base_sing", String.class)
+                resultSet.getObject("id", Integer.class),
+                resultSet.getObject("code", String.class),
+                resultSet.getObject("full_name", String.class),
+                resultSet.getObject("sing", String.class)
         ),
                 new Currencies(
-                        resultSet.getObject("target_id", Integer.class),
-                        resultSet.getObject("target_code", String.class),
-                        resultSet.getObject("target_full_name", String.class),
-                        resultSet.getObject("target_sign", String.class)
+                        resultSet.getObject("id", Integer.class),
+                        resultSet.getObject("code", String.class),
+                        resultSet.getObject("full_name", String.class),
+                        resultSet.getObject("sign", String.class)
                 ), resultSet.getBigDecimal("rate"));
     }
 
@@ -138,7 +138,19 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
 //                Currencies currencies = null;
                 ExchangeRates exchangeRates = null;
                 if (resultSet.next()) {
-                    exchangeRates = getExchange(resultSet);
+                    exchangeRates = new ExchangeRates(resultSet.getInt("id"),
+                            new Currencies(
+                                    resultSet.getObject("id", Integer.class),
+                                    resultSet.getObject("code", String.class),
+                                    resultSet.getObject("full_name", String.class),
+                                    resultSet.getObject("sing", String.class)
+                            ),
+                            new Currencies(
+                                    resultSet.getObject("id", Integer.class),
+                                    resultSet.getObject("code", String.class),
+                                    resultSet.getObject("full_name", String.class),
+                                    resultSet.getObject("sign", String.class)
+                            ), resultSet.getBigDecimal("rate"));
                 }
                 return Optional.ofNullable(exchangeRates);
             } catch (SQLException e) {
@@ -164,6 +176,8 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
             prepareStatement.setObject(1, entity.getBaseCurrencyId().getId());
             prepareStatement.setObject(2, entity.getTargetCurrencyId().getId());
             prepareStatement.setBigDecimal(3, entity.getRate());
+
+            prepareStatement.executeUpdate();
 
             var generatedKeys = prepareStatement.getGeneratedKeys();
             if(generatedKeys.next()) {

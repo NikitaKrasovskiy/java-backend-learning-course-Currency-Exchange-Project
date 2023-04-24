@@ -1,9 +1,6 @@
 package com.CurrencyExchange.cherigra.servlet;
 
-import com.CurrencyExchange.cherigra.dto.CurrenciesDto;
 import com.CurrencyExchange.cherigra.dto.ExchangeRatesDto;
-import com.CurrencyExchange.cherigra.entity.ExchangeRates;
-import com.CurrencyExchange.cherigra.service.CurrenciesService;
 import com.CurrencyExchange.cherigra.service.ExchangeRatesService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
@@ -13,10 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Objects;
 
 @WebServlet("/exchangeRates")
 public class ExchangeRatesServlet extends HttpServlet {
@@ -38,7 +33,7 @@ public class ExchangeRatesServlet extends HttpServlet {
         String targetCurrencyCode = req.getParameter("targetCurrencyCode");
         String rate = req.getParameter("rate");
 
-        var id = exchangeRatesService.save(baseCurrencyCode, targetCurrencyCode, rate);
+        var id = exchangeRatesService.savee(baseCurrencyCode, targetCurrencyCode, rate);
 
         var exchangeList = exchangeRatesService.findById(id);
 

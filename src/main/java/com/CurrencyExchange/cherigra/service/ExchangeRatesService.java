@@ -2,9 +2,7 @@ package com.CurrencyExchange.cherigra.service;
 
 import com.CurrencyExchange.cherigra.dao.CurrenciesDao;
 import com.CurrencyExchange.cherigra.dao.ExchangeRatesDao;
-import com.CurrencyExchange.cherigra.dto.CurrenciesDto;
 import com.CurrencyExchange.cherigra.dto.ExchangeRatesDto;
-import com.CurrencyExchange.cherigra.entity.Currencies;
 import com.CurrencyExchange.cherigra.entity.ExchangeRates;
 
 import java.math.BigDecimal;
@@ -30,7 +28,7 @@ public class ExchangeRatesService {
                 )).collect(toList());
     }
 
-    public Integer save(String baseCurrencyCode, String targetCurrencyCode, String rate) {
+    public Integer savee(String baseCurrencyCode, String targetCurrencyCode, String rate) {
         BigDecimal rates = BigDecimal.valueOf(Long.parseLong(rate));
         ExchangeRates exchangeRates = new ExchangeRates(
                 currenciesDao.findByCode(targetCurrencyCode).orElseThrow(),
