@@ -161,9 +161,9 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
         try (var connection = ConnectionManager.get();
              var prepareStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
 
-            prepareStatement.setObject(1, entity.getBaseCurrencyId());
-            prepareStatement.setObject(2, entity.getTargetCurrencyId());
-            prepareStatement.setObject(3, entity.getRate());
+            prepareStatement.setObject(1, entity.getBaseCurrencyId().getId());
+            prepareStatement.setObject(2, entity.getTargetCurrencyId().getId());
+            prepareStatement.setBigDecimal(3, entity.getRate());
 
             var generatedKeys = prepareStatement.getGeneratedKeys();
             if(generatedKeys.next()) {

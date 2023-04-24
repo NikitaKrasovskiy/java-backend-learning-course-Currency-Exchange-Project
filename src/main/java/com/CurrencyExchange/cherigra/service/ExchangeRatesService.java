@@ -31,14 +31,13 @@ public class ExchangeRatesService {
     }
 
     public Integer save(String baseCurrencyCode, String targetCurrencyCode, String rate) {
-//        var exchangeRates = new ExchangeRates(baseCurrencyCode, targetCurrencyCode, rate);
-//        currenciesDao.save(currencies);
-//        return currencies.getId();
-            var exchangeRates = new ExchangeRates(currenciesDao.findByCode(targetCurrencyCode).orElseThrow(),
-                    currenciesDao.findByCode(baseCurrencyCode).orElseThrow(),
-                    BigDecimal.valueOf(Double.parseDouble(rate)));
-            exchangeRatesDao.save(exchangeRates);
-            return exchangeRates.getId();
+        BigDecimal rates = BigDecimal.valueOf(Long.parseLong(rate));
+        ExchangeRates exchangeRates = new ExchangeRates(
+                currenciesDao.findByCode(targetCurrencyCode).orElseThrow(),
+                currenciesDao.findByCode(baseCurrencyCode).orElseThrow(),
+                rates);
+        exchangeRatesDao.save(exchangeRates);
+        return exchangeRates.getId();
     }
 
     public List<ExchangeRatesDto> findById(Integer id) {
