@@ -48,6 +48,8 @@ public class ExchangeRatesTargetServlet  extends HttpServlet {
         String baseCurrencyCode = url.substring(0, 3);
         String targetCurrencyCode = url.substring(3);
         String paramRateValue = parameter.replace("rate=", "");
+        resp.setContentType("text/json");
+        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
         exchangeRatesTargetService.updatee(baseCurrencyCode, targetCurrencyCode, paramRateValue);
         var byCodes = exchangeRatesTargetService.findByCodes(baseCurrencyCode, targetCurrencyCode);
