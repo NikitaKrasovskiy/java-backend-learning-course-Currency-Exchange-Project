@@ -2,6 +2,7 @@ package com.CurrencyExchange.cherigra.service;
 
 import com.CurrencyExchange.cherigra.dao.ExchangeRatesDao;
 import com.CurrencyExchange.cherigra.dto.ExchangeRatesDto;
+import com.CurrencyExchange.cherigra.entity.ExchangeRates;
 
 import java.util.List;
 
@@ -20,6 +21,9 @@ public class ExchangeRatesTargetService {
                         exchangeRates.getTargetCurrencyId(),
                         exchangeRates.getRate()
                 )).collect(toList());
+    }
+    public void update(ExchangeRates entity) {
+        
     }
     public static ExchangeRatesTargetService getInstance() {
         return INSTANCE;
