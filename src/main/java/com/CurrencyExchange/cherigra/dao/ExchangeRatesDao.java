@@ -79,6 +79,14 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
                 WHERE er.id = ?
             """;
 
+    final String UPDATE_EX_SQL = """
+            update exchange_rates
+            set base_carrency_id = ?,
+                target_carrency_id = ?,
+                rate = ?
+            where id = ?
+            """;
+
     @Override
     public List<ExchangeRates> findAll() {
         try (var connection = ConnectionManager.get();
@@ -164,6 +172,20 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
 
     @Override
     public void update(ExchangeRates entity) {
+
+        try (var connection = ConnectionManager.get();
+             var prepareStatement = connection.prepareStatement(UPDATE_EX_SQL)) {
+
+
+            prepareStatement.setObject(1,entity.getBaseCurrencyId());
+            prepareStatement.setObject(2, entity.getTargetCurrencyId());
+            prepareStatement.setObject(3, entity.getRate());
+            prepareStatement.setObject(4,entity.getId());
+
+            prepareStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
