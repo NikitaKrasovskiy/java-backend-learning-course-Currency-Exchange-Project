@@ -32,6 +32,8 @@ public class ExchangeRatesServlet extends HttpServlet {
         String baseCurrencyCode = req.getParameter("baseCurrencyCode");
         String targetCurrencyCode = req.getParameter("targetCurrencyCode");
         String rate = req.getParameter("rate");
+        resp.setContentType("text/json");
+        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
         var id = exchangeRatesService.savee(baseCurrencyCode, targetCurrencyCode, rate);
 
