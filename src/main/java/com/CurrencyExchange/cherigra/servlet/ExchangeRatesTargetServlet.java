@@ -43,7 +43,7 @@ public class ExchangeRatesTargetServlet  extends HttpServlet {
     }
 
     private void doPatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String url = req.getPathInfo().replaceAll("/", "");
+        String url = req.getPathInfo().replaceAll("/", ""); // TODO нужен рефактор кода !!!!
         String parameter = req.getReader().readLine();
         String baseCurrencyCode = url.substring(0, 3);
         String targetCurrencyCode = url.substring(3);
