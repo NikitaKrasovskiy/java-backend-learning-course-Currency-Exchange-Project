@@ -81,9 +81,7 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
 
     final String UPDATE_EX_SQL = """
             update exchange_rates
-            set base_carrency_id = ?,
-                target_carrency_id = ?,
-                rate = ?
+            set (base_currency_id, target_currency_id, rate) = (?, ?, ?)
             where id = ?
             """;
 

@@ -27,16 +27,21 @@ public class ExchangeRatesTargetService {
                         exchangeRates.getRate()
                 )).collect(toList());
     }
-    public Integer updatee(String baseCurrencyCode, String targetCurrencyCode, String rate) {
+    public void updatee(String baseCurrencyCode, String targetCurrencyCode, String rate) {
         BigDecimal rates = BigDecimal.valueOf(Double.parseDouble(rate));
-        ExchangeRates exchangeRates = new ExchangeRates(
-                currenciesDao.findByCode(baseCurrencyCode).orElseThrow(),
-                currenciesDao.findByCode(targetCurrencyCode).orElseThrow(),
-                rates
-        );
-        exchangeRates.setRate(rates);
-        exchangeRatesDao.update(exchangeRates);
-        return exchangeRates.getId();
+//        ExchangeRates exchangeRates = new ExchangeRates(
+//                currenciesDao.findByCode(baseCurrencyCode).orElseThrow(),
+//                currenciesDao.findByCode(targetCurrencyCode).orElseThrow(),
+//                rates
+//        );
+        var byCodes = exchangeRatesDao.findByCodes(baseCurrencyCode, targetCurrencyCode);
+        byCodes.ifPresent(exchangeRates1 -> {
+            exchangeRates1.setRate(rates);
+            exchangeRatesDao.update(exchangeRates1);
+        });
+//        exchangeRates.setRate(rates);
+//        exchangeRatesDao.update(exchangeRates);
+//        return exchangeRates.getId();
     }
     public static ExchangeRatesTargetService getInstance() {
         return INSTANCE;

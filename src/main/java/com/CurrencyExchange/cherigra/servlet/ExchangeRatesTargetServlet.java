@@ -1,6 +1,7 @@
 package com.CurrencyExchange.cherigra.servlet;
 
 import com.CurrencyExchange.cherigra.dto.ExchangeRatesDto;
+import com.CurrencyExchange.cherigra.entity.ExchangeRates;
 import com.CurrencyExchange.cherigra.service.ExchangeRatesTargetService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
@@ -48,7 +49,7 @@ public class ExchangeRatesTargetServlet  extends HttpServlet {
         String targetCurrencyCode = url.substring(3);
         String paramRateValue = parameter.replace("rate=", "");
 
-//        exchangeRatesTargetService.updatee(baseCurrencyCode, targetCurrencyCode, paramRateValue);
+        exchangeRatesTargetService.updatee(baseCurrencyCode, targetCurrencyCode, paramRateValue);
         var byCodes = exchangeRatesTargetService.findByCodes(baseCurrencyCode, targetCurrencyCode);
 
         mapper.writeValue(resp.getWriter(), byCodes);
