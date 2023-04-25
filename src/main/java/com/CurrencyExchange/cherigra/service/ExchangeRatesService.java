@@ -28,16 +28,6 @@ public class ExchangeRatesService {
                 )).collect(toList());
     }
 
-    public Integer savee(String baseCurrencyCode, String targetCurrencyCode, String rate) {
-        BigDecimal rates = BigDecimal.valueOf(Long.parseLong(rate));
-        ExchangeRates exchangeRates = new ExchangeRates(
-                currenciesDao.findByCode(targetCurrencyCode).orElseThrow(),
-                currenciesDao.findByCode(baseCurrencyCode).orElseThrow(),
-                rates);
-        exchangeRatesDao.save(exchangeRates);
-        return exchangeRates.getId();
-    }
-
     public List<ExchangeRatesDto> findById(Integer id) {
         return exchangeRatesDao.findById(id).stream()
                 .map(exchangeRates -> new ExchangeRatesDto(
@@ -46,6 +36,15 @@ public class ExchangeRatesService {
                         exchangeRates.getTargetCurrencyId(),
                         exchangeRates.getRate()
                 )).collect(toList());
+    }
+    public Integer savee(String baseCurrencyCode, String targetCurrencyCode, String rate) {
+        BigDecimal rates = BigDecimal.valueOf(Double.parseDouble(rate));
+        ExchangeRates exchangeRates = new ExchangeRates(
+                currenciesDao.findByCode(targetCurrencyCode).orElseThrow(),
+                currenciesDao.findByCode(baseCurrencyCode).orElseThrow(),
+                rates);
+        exchangeRatesDao.save(exchangeRates);
+        return exchangeRates.getId();
     }
     public static ExchangeRatesService getInstance() {
         return INSTANCE;

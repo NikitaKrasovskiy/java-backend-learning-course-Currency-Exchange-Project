@@ -56,7 +56,7 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
                                                 )
             """;
 
-    private static final String INSERT_SQL = """
+    private static final String INSERT_EX_SQL = """
             insert into exchange_rates (base_currency_id, target_currency_id, rate)
             values (?, ?, ?)
             """;
@@ -97,16 +97,16 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
     private ExchangeRates getExchange(ResultSet resultSet) throws SQLException {  // TODO нужно переместить в низ, нужно рефактор названия
         return new ExchangeRates(resultSet.getInt("id"),
         new Currencies(
-                resultSet.getObject("id", Integer.class),
-                resultSet.getObject("code", String.class),
-                resultSet.getObject("full_name", String.class),
-                resultSet.getObject("sing", String.class)
+                resultSet.getObject("base_id", Integer.class),
+                resultSet.getObject("base_code", String.class),
+                resultSet.getObject("base_full_name", String.class),
+                resultSet.getObject("base_sing", String.class)
         ),
                 new Currencies(
-                        resultSet.getObject("id", Integer.class),
-                        resultSet.getObject("code", String.class),
-                        resultSet.getObject("full_name", String.class),
-                        resultSet.getObject("sign", String.class)
+                        resultSet.getObject("target_id", Integer.class),
+                        resultSet.getObject("target_code", String.class),
+                        resultSet.getObject("target_full_name", String.class),
+                        resultSet.getObject("target_sign", String.class)
                 ), resultSet.getBigDecimal("rate"));
     }
 
@@ -135,21 +135,20 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
                  var prepareStatement = connection.prepareStatement(query)) {
                 prepareStatement.setObject(1, id);
                 var resultSet = prepareStatement.executeQuery();
-//                Currencies currencies = null;
                 ExchangeRates exchangeRates = null;
                 if (resultSet.next()) {
                     exchangeRates = new ExchangeRates(resultSet.getInt("id"),
                             new Currencies(
-                                    resultSet.getObject("id", Integer.class),
-                                    resultSet.getObject("code", String.class),
-                                    resultSet.getObject("full_name", String.class),
-                                    resultSet.getObject("sing", String.class)
+                                    resultSet.getObject("base_id", Integer.class),
+                                    resultSet.getObject("base_code", String.class),
+                                    resultSet.getObject("base_full_name", String.class),
+                                    resultSet.getObject("base_sign", String.class)
                             ),
                             new Currencies(
-                                    resultSet.getObject("id", Integer.class),
-                                    resultSet.getObject("code", String.class),
-                                    resultSet.getObject("full_name", String.class),
-                                    resultSet.getObject("sign", String.class)
+                                    resultSet.getObject("target_id", Integer.class),
+                                    resultSet.getObject("target_code", String.class),
+                                    resultSet.getObject("target_full_name", String.class),
+                                    resultSet.getObject("target_sign", String.class)
                             ), resultSet.getBigDecimal("rate"));
                 }
                 return Optional.ofNullable(exchangeRates);
@@ -171,7 +170,7 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
     @Override
     public ExchangeRates save(ExchangeRates entity) {
         try (var connection = ConnectionManager.get();
-             var prepareStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
+             var prepareStatement = connection.prepareStatement(INSERT_EX_SQL, Statement.RETURN_GENERATED_KEYS)) {
 
             prepareStatement.setObject(1, entity.getBaseCurrencyId().getId());
             prepareStatement.setObject(2, entity.getTargetCurrencyId().getId());
