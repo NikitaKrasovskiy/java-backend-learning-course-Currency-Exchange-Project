@@ -177,10 +177,10 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
              var prepareStatement = connection.prepareStatement(UPDATE_EX_SQL)) {
 
 
-            prepareStatement.setObject(1,entity.getBaseCurrencyId());
-            prepareStatement.setObject(2, entity.getTargetCurrencyId());
-            prepareStatement.setObject(3, entity.getRate());
-            prepareStatement.setObject(4,entity.getId());
+            prepareStatement.setInt(1,entity.getBaseCurrencyId().getId());
+            prepareStatement.setInt(2, entity.getTargetCurrencyId().getId());
+            prepareStatement.setBigDecimal(3, entity.getRate());
+            prepareStatement.setInt(4,entity.getId());
 
             prepareStatement.executeUpdate();
         } catch (SQLException e) {
