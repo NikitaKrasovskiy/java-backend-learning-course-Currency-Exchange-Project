@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import static java.math.MathContext.DECIMAL64;
 
-public class RateCurrenciesService {
+public class RateCurrenciesService { // TODO  переделать !!!
     private static final RateCurrenciesService INSTANCE = new RateCurrenciesService();
 
     private final ExchangeRatesDao exchangeRatesDao = ExchangeRatesDao.getInstance();
