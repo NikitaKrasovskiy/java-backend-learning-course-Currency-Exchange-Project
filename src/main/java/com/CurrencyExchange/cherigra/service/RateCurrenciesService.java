@@ -8,6 +8,7 @@ import com.CurrencyExchange.cherigra.entity.ExchangeRates;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 import static java.math.MathContext.DECIMAL64;
@@ -27,7 +28,7 @@ public class RateCurrenciesService {
 //                                exchangeRates.getTargetCurrencyId(),
 //                                exchangeRates.getRate()
 //                                )).collect(toList());
-    public ExchangeRatesDto findAmount(String baseCode, String targetCode, String amount) throws SQLException {
+    public ExchangeRatesDto findAmounts(String baseCode, String targetCode, String amount) throws SQLException {
         ExchangeRates exchangeRates = getExchangeRate(baseCode, targetCode).orElseThrow();
         var BigDecimalAmount = BigDecimal.valueOf(Double.parseDouble(amount));
         BigDecimal convertedAmount = BigDecimalAmount.multiply(exchangeRates.getRate());
@@ -69,6 +70,25 @@ public class RateCurrenciesService {
     }
 
     private Optional<ExchangeRates> getCrossExchangeRate(String baseCurrencyCode, String targetCurrencyCode) throws SQLException {
-        return null;
+        var exchangeRatesDaoAmount = exchangeRatesDao.findAmount(baseCurrencyCode, targetCurrencyCode);
+
+        if (exchangeRatesDaoAmount.size() != 2) {
+            return Optional.empty();
+        }
+        ExchangeRates usdToBaseExchangeRate = exchangeRatesDaoAmount.get(0);
+        ExchangeRates usdToTargetExchangeRate = exchangeRatesDaoAmount.get(1);
+
+        BigDecimal usdToBaseRate = usdToBaseExchangeRate.getRate();
+        BigDecimal usdToTargetRate = usdToTargetExchangeRate.getRate();
+
+        BigDecimal baseToTargetRate = usdToTargetRate.divide(usdToBaseRate, DECIMAL64);
+
+
+        ExchangeRates exchangeRates = new ExchangeRates(
+                usdToBaseExchangeRate.getTargetCurrencyId(),
+                usdToTargetExchangeRate.getTargetCurrencyId(),
+                baseToTargetRate
+                );
+        return Optional.of(exchangeRates);
     }
 }
