@@ -10,12 +10,25 @@ public class ExchangeRatesDto {
     private Currencies targetCurrencyId;
     private BigDecimal rate;
 
+    private BigDecimal amount;
+
+    private BigDecimal convertedAmount;
+
     public ExchangeRatesDto(Integer id, Currencies baseCurrencyId, Currencies targetCurrencyId, BigDecimal rate) {
         this.id = id;
         this.baseCurrencyId = baseCurrencyId;
         this.targetCurrencyId = targetCurrencyId;
         this.rate = rate;
     }
+
+    public ExchangeRatesDto(Currencies baseCurrencyId, Currencies targetCurrencyId, BigDecimal rate, BigDecimal amount, BigDecimal convertedAmount) {
+        this.baseCurrencyId = baseCurrencyId;
+        this.targetCurrencyId = targetCurrencyId;
+        this.rate = rate;
+        this.amount = amount;
+        this.convertedAmount = convertedAmount;
+    }
+
     ExchangeRatesDto() {
 
    }
