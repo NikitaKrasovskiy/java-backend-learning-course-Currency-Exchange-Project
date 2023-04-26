@@ -85,9 +85,51 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
             where id = ?
             """;
 
-    @Override
-    public List<ExchangeRates> findAll() {
+    final String CONVERT_CURRENCY_EX_SQL = """
+                 SELECT
+                                    er.id AS id,
+                                    bc.id AS base_id,
+                                    bc.code AS base_code,
+                                    bc.full_name AS base_name,
+                                    bc.sign AS base_sign,
+                                    tc.id AS target_id,
+                                    tc.code AS target_code,
+                                    tc.full_name AS target_name,
+                                    tc.sign AS target_sign,
+                                    er.rate AS rate
+                                FROM exchange_rates er
+                                JOIN currencies bc ON er.base_currency_id = bc.id
+                                JOIN currencies tc ON er.target_currency_id = tc.id
+                                WHERE (
+                                    base_currency_id = (SELECT c.id FROM currencies c WHERE c.code = 'USD') AND
+                                    target_currency_id = (SELECT c2.id FROM currencies c2 WHERE c2.code = ?) OR
+                                    target_currency_id = (SELECT c3.id FROM currencies c3 WHERE c3.code = ?)
+                                )
+            """;
+
+
+    public List<ExchangeRates> findAmount(String baseCode, String targetCode) {
         try (var connection = ConnectionManager.get();
+             var prepareStatement = connection.prepareStatement(CONVERT_CURRENCY_EX_SQL)) {
+
+            prepareStatement.setObject(1, baseCode);
+            prepareStatement.setObject(1, targetCode);
+
+            prepareStatement.executeQuery();
+
+            List<ExchangeRates> exchangeRates = new ArrayList<>();
+            var resultSet = prepareStatement.executeQuery();
+            if (resultSet.next()) {
+                exchangeRates.add(getExchange(resultSet));
+            }
+            return exchangeRates;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+        @Override
+    public List<ExchangeRates> findAll() {
+        try (var connection = ConnectionManager.get(); // TODO мб сломал , надеюсь что нет
              var prepareStatement = connection.prepareStatement(FIND_ALL_SQL)) {
             var resultSet = prepareStatement.executeQuery();
             List<ExchangeRates> exchangeRates = new ArrayList<>();
