@@ -27,9 +27,12 @@ public class RateCurrenciesService {
 //                                exchangeRates.getRate()
 //                                )).collect(toList());
     public ExchangeRatesDto findAmounts(String baseCode, String targetCode, String amount) throws SQLException {
-        var BigDecimalAmount = BigDecimal.valueOf(Double.parseDouble(amount));
         ExchangeRates exchangeRates = getExchangeRate(baseCode, targetCode).orElseThrow();
+
+        var BigDecimalAmount = BigDecimal.valueOf(Double.parseDouble(amount));
+
         BigDecimal convertedAmount = BigDecimalAmount.multiply(exchangeRates.getRate());
+
         return new ExchangeRatesDto(
                 exchangeRates.getBaseCurrencyId(),
                 exchangeRates.getTargetCurrencyId(),
