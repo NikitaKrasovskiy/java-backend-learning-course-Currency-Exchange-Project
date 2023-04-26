@@ -14,11 +14,9 @@ import java.util.Optional;
 import static java.math.MathContext.DECIMAL64;
 
 public class RateCurrenciesService {
-    private static final ExchangeRatesTargetService INSTANCE = new ExchangeRatesTargetService();
+    private static final RateCurrenciesService INSTANCE = new RateCurrenciesService();
 
     private final ExchangeRatesDao exchangeRatesDao = ExchangeRatesDao.getInstance();
-
-    private final CurrenciesDao currenciesDao = new CurrenciesDao();
 
 
 //     return exchangeRatesDao.findByCodes(baseCode, targetCode).stream()
@@ -29,8 +27,8 @@ public class RateCurrenciesService {
 //                                exchangeRates.getRate()
 //                                )).collect(toList());
     public ExchangeRatesDto findAmounts(String baseCode, String targetCode, String amount) throws SQLException {
-        ExchangeRates exchangeRates = getExchangeRate(baseCode, targetCode).orElseThrow();
         var BigDecimalAmount = BigDecimal.valueOf(Double.parseDouble(amount));
+        ExchangeRates exchangeRates = getExchangeRate(baseCode, targetCode).orElseThrow();
         BigDecimal convertedAmount = BigDecimalAmount.multiply(exchangeRates.getRate());
         return new ExchangeRatesDto(
                 exchangeRates.getBaseCurrencyId(),
@@ -90,5 +88,9 @@ public class RateCurrenciesService {
                 baseToTargetRate
                 );
         return Optional.of(exchangeRates);
+    }
+
+    public static RateCurrenciesService getInstance() {
+        return INSTANCE;
     }
 }

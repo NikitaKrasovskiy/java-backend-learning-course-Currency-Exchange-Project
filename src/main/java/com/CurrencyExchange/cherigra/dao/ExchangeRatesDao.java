@@ -25,7 +25,7 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
                                 currencies_1.id AS base_id,
                                 currencies_1.code AS base_code,
                                 currencies_1.full_name AS base_full_name,
-                                currencies_1.sign AS base_sing,
+                                currencies_1.sign AS base_sign,
                                 currencies_2.id AS target_id,
                                 currencies_2.code AS target_code,
                                 currencies_2.full_name AS target_full_name,
@@ -41,7 +41,7 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
                                 currencies_1.id AS base_id,
                                 currencies_1.code AS base_code,
                                 currencies_1.full_name AS base_full_name,
-                                currencies_1.sign AS base_sing,
+                                currencies_1.sign AS base_sign,
                                 currencies_2.id AS target_id,
                                 currencies_2.code AS target_code,
                                 currencies_2.full_name AS target_full_name,
@@ -90,11 +90,11 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
                                     er.id AS id,
                                     bc.id AS base_id,
                                     bc.code AS base_code,
-                                    bc.full_name AS base_name,
+                                    bc.full_name AS base_full_name,
                                     bc.sign AS base_sign,
                                     tc.id AS target_id,
                                     tc.code AS target_code,
-                                    tc.full_name AS target_name,
+                                    tc.full_name AS target_full_name,
                                     tc.sign AS target_sign,
                                     er.rate AS rate
                                 FROM exchange_rates er
@@ -113,7 +113,7 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
              var prepareStatement = connection.prepareStatement(CONVERT_CURRENCY_EX_SQL)) {
 
             prepareStatement.setObject(1, baseCode);
-            prepareStatement.setObject(1, targetCode);
+            prepareStatement.setObject(2, targetCode);
 
             prepareStatement.executeQuery();
 
@@ -148,7 +148,7 @@ public class ExchangeRatesDao implements Dao<Integer, ExchangeRates> {
                 resultSet.getObject("base_id", Integer.class),
                 resultSet.getObject("base_code", String.class),
                 resultSet.getObject("base_full_name", String.class),
-                resultSet.getObject("base_sing", String.class)
+                resultSet.getObject("base_sign", String.class) // sing =  sign
         ),
                 new Currencies(
                         resultSet.getObject("target_id", Integer.class),
