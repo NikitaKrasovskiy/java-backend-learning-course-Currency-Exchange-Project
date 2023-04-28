@@ -18,14 +18,6 @@ public class RateCurrenciesService { // TODO  переделать !!!
 
     private final ExchangeRatesDao exchangeRatesDao = ExchangeRatesDao.getInstance();
 
-
-//     return exchangeRatesDao.findByCodes(baseCode, targetCode).stream()
-//                .map(exchangeRates -> new ExchangeRatesDto(
-//            exchangeRates.getId(),
-//                        exchangeRates.getBaseCurrencyId(),
-//                                exchangeRates.getTargetCurrencyId(),
-//                                exchangeRates.getRate()
-//                                )).collect(toList());
     public ExchangeRatesDto findAmounts(String baseCode, String targetCode, String amount) throws SQLException {
         ExchangeRates exchangeRates = getExchangeRate(baseCode, targetCode).orElseThrow();
 

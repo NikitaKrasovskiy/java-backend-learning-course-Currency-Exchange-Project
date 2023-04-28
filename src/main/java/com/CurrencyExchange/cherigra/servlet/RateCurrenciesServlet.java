@@ -34,8 +34,5 @@ public class RateCurrenciesServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-//        ExchangeResponse exchangeResponse = exchangeService.convertCurrency(baseCurrencyCode, targetCurrencyCode, amount);
-//        objectMapper.writeValue(resp.getWriter(), exchangeResponse);
     }
 }

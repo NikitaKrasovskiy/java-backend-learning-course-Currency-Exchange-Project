@@ -3,11 +3,9 @@ package com.CurrencyExchange.cherigra.service;
 import com.CurrencyExchange.cherigra.dao.CurrenciesDao;
 import com.CurrencyExchange.cherigra.dao.ExchangeRatesDao;
 import com.CurrencyExchange.cherigra.dto.ExchangeRatesDto;
-import com.CurrencyExchange.cherigra.entity.ExchangeRates;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -29,19 +27,11 @@ public class ExchangeRatesTargetService {
     }
     public void updatee(String baseCurrencyCode, String targetCurrencyCode, String rate) {
         BigDecimal rates = BigDecimal.valueOf(Double.parseDouble(rate));
-//        ExchangeRates exchangeRates = new ExchangeRates(
-//                currenciesDao.findByCode(baseCurrencyCode).orElseThrow(),
-//                currenciesDao.findByCode(targetCurrencyCode).orElseThrow(),
-//                rates
-//        );
         var byCodes = exchangeRatesDao.findByCodes(baseCurrencyCode, targetCurrencyCode);
         byCodes.ifPresent(exchangeRates1 -> {
             exchangeRates1.setRate(rates);
             exchangeRatesDao.update(exchangeRates1);
         });
-//        exchangeRates.setRate(rates);
-//        exchangeRatesDao.update(exchangeRates);
-//        return exchangeRates.getId();
     }
     public static ExchangeRatesTargetService getInstance() {
         return INSTANCE;
