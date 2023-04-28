@@ -1,4 +1,4 @@
-package com.CurrencyExchange.cherigra.filters;
+package com.CurrencyExchange.cherigra.servlet.filters;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
