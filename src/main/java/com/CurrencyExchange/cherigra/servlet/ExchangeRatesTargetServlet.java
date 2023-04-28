@@ -35,8 +35,6 @@ public class ExchangeRatesTargetServlet  extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getPathInfo().replaceAll("/", "");
-        resp.setContentType("text/json");
-        resp.setCharacterEncoding(StandardCharsets.UTF_8.name()); // TODO добавить filter для сервлетов
         String baseCurrencyCode = url.substring(0, 3);
         String targetCurrencyCode = url.substring(3);
         var  byCodes = exchangeRatesTargetService.findByCodes(baseCurrencyCode, targetCurrencyCode);

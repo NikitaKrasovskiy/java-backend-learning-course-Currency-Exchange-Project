@@ -21,8 +21,6 @@ public class ExchangeRatesServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/json");
-        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
         List<ExchangeRatesDto> exchangeList = exchangeRatesService.findAll();
         mapper.writeValue(resp.getWriter(), exchangeList);
     }
