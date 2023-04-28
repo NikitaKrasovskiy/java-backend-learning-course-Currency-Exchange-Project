@@ -37,7 +37,7 @@ public class CurrenciesService {
 				)).collect(toList());
 	}
 
-	public Integer save(String code, String fullName, String sign) {
+	public Integer save(String code, String fullName, String sign) { // TODO сервисы долны возращать только DTO или Model
 		var currencies = new Currencies(code, fullName, sign);
 		currenciesDao.save(currencies);
 		return currencies.getId();
