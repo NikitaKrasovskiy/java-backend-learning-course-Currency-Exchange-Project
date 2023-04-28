@@ -27,9 +27,6 @@ public class RateCurrenciesServlet extends HttpServlet {
         String targetCurrencyCode = req.getParameter("to");
         String amountToConvertParam = req.getParameter("amount");
 
-        resp.setContentType("text/json");
-        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
-
 
         try {
             ExchangeRatesDto amounts = exchangeRatesTargetService.findAmounts(baseCurrencyCode, targetCurrencyCode, amountToConvertParam);

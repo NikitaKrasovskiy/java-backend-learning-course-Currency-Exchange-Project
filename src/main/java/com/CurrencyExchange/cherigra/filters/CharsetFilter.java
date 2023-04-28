@@ -13,5 +13,9 @@ public class CharsetFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         request.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
+        response.setContentType("application/json");
+
+        chain.doFilter(request, response);
     }
 }
