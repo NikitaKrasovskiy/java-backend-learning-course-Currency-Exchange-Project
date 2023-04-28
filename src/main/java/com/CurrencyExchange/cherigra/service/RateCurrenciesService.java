@@ -46,7 +46,7 @@ public class RateCurrenciesService { // TODO  переделать !!!
         var byCodes = exchangeRatesDao.findByCodes(baseCurrencyCode, targetCurrencyCode);
 
         if (byCodes.isEmpty()) {
-            byCodes = getReverseExchangeRate(baseCurrencyCode, targetCurrencyCode);
+            byCodes = getReverseExchangeRate(baseCurrencyCode, targetCurrencyCode);   // TODO рефактор в функциональном ввиде
         }
         if (byCodes.isEmpty()) {
             byCodes = getCrossExchangeRate(baseCurrencyCode, targetCurrencyCode);
@@ -62,7 +62,7 @@ public class RateCurrenciesService { // TODO  переделать !!!
         }
         ExchangeRates exchangeRates = byCodes.get();
 
-        ExchangeRates exchangeRates1 = new ExchangeRates(
+        ExchangeRates exchangeRates1 = new ExchangeRates(       // TODO рефактор в функциональном ввиде
                 exchangeRates.getTargetCurrencyId(),
                 exchangeRates.getBaseCurrencyId(),
                 BigDecimal.ONE.divide(exchangeRates.getRate(), DECIMAL64)
@@ -76,7 +76,7 @@ public class RateCurrenciesService { // TODO  переделать !!!
         if (exchangeRatesDaoAmount.size() != 2) {
             return Optional.empty();
         }
-        ExchangeRates usdToBaseExchangeRate = exchangeRatesDaoAmount.get(0);
+        ExchangeRates usdToBaseExchangeRate = exchangeRatesDaoAmount.get(0);     // TODO рефактор в функциональном ввиде
         ExchangeRates usdToTargetExchangeRate = exchangeRatesDaoAmount.get(1);
 
         BigDecimal usdToBaseRate = usdToBaseExchangeRate.getRate();
@@ -85,7 +85,7 @@ public class RateCurrenciesService { // TODO  переделать !!!
         BigDecimal baseToTargetRate = usdToTargetRate.divide(usdToBaseRate, DECIMAL64);
 
 
-        ExchangeRates exchangeRates = new ExchangeRates(
+        ExchangeRates exchangeRates = new ExchangeRates(      // TODO рефактор в функциональном ввиде
                 usdToBaseExchangeRate.getTargetCurrencyId(),
                 usdToTargetExchangeRate.getTargetCurrencyId(),
                 baseToTargetRate

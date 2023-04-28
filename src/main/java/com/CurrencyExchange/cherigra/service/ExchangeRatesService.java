@@ -38,7 +38,7 @@ public class ExchangeRatesService {
                 )).collect(toList());
     }
     public Integer savee(String baseCurrencyCode, String targetCurrencyCode, String rate) {
-        BigDecimal rates = BigDecimal.valueOf(Double.parseDouble(rate));
+        BigDecimal rates = BigDecimal.valueOf(Double.parseDouble(rate)); // TODO рефактор в функциональном ввиде
         ExchangeRates exchangeRates = new ExchangeRates(
                 currenciesDao.findByCode(targetCurrencyCode).orElseThrow(),
                 currenciesDao.findByCode(baseCurrencyCode).orElseThrow(),

@@ -3,7 +3,7 @@ package com.CurrencyExchange.cherigra.entity;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 
-public class ExchangeRates {
+public class ExchangeRates { // TODO рефактор lombok
 
     private Integer id;
     private Currencies baseCurrencyId;

@@ -4,7 +4,7 @@ import com.CurrencyExchange.cherigra.entity.Currencies;
 
 import java.math.BigDecimal;
 
-public class ExchangeRatesDto {
+public class ExchangeRatesDto { // TODO рефактор lombok
     private Integer id;
     private Currencies baseCurrencyId;
     private Currencies targetCurrencyId;

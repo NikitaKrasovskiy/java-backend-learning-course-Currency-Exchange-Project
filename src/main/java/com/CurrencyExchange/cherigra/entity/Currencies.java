@@ -2,7 +2,7 @@ package com.CurrencyExchange.cherigra.entity;
 
 import java.util.Objects;
 
-public class Currencies {
+public class Currencies {  // TODO рефактор lombok
 	private Integer id;
 	private String code;
 	private String fullName;

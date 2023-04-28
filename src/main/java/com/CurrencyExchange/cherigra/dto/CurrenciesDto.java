@@ -2,7 +2,7 @@ package com.CurrencyExchange.cherigra.dto;
 
 import java.util.Objects;
 
-public class CurrenciesDto {
+public class CurrenciesDto {  // TODO рефактор lombok
 	private Integer id;
 	private String code;
 	private String fullName;

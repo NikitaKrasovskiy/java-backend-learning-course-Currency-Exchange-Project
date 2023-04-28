@@ -26,7 +26,7 @@ public final class ConnectionManager {
 	}
 	
 	public static Connection get() {
-		try {
+		try {    // TODO рефактор в функциональном ввиде
 			return DriverManager.getConnection(
 					PropertiesUtil.get(URL_KEY),
 					PropertiesUtil.get(USER_KEY),
