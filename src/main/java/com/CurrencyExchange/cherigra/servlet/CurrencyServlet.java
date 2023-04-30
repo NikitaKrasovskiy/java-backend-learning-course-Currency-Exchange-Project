@@ -22,10 +22,11 @@ public class CurrencyServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String code = req.getPathInfo().replaceAll("/", "");
+//        String code = req.getPathInfo().replaceAll("/", "");
+        currenciesDto.setCode(req.getPathInfo().replaceAll("/", ""));
 
                                                                     // TODO нужно на всех сервлетах сделать валидацию
-        List<CurrenciesDto> optionalCurrencies = currencyService.findByCode(code);
+        List<CurrenciesDto> optionalCurrencies = currencyService.findByCode(currenciesDto);
         mapper.writeValue(resp.getWriter(), optionalCurrencies);
     }
 }
