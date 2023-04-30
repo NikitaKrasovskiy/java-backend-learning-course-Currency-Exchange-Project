@@ -41,7 +41,7 @@ public class ExchangeRatesService {
     public Integer savee(String baseCurrencyCode, String targetCurrencyCode, String rate) throws SQLException { // TODO сервисы долны возращать только DTO или Model
         BigDecimal rates = BigDecimal.valueOf(Double.parseDouble(rate)); // TODO рефактор в функциональном ввиде
         ExchangeRates exchangeRates = new ExchangeRates(
-                currenciesDao.findByCode(targetCurrencyCode).orElseThrow(),
+                currenciesDao.findByCode(targetCurrencyCode).orElseThrow(),  // переделать костыль
                 currenciesDao.findByCode(baseCurrencyCode).orElseThrow(),
                 rates);
         exchangeRatesDao.save(exchangeRates);
