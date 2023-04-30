@@ -18,9 +18,12 @@ public class CurrencyServlet extends HttpServlet {
     private final CurrencyService currencyService = CurrencyService.getInstance();
     private final ObjectMapper mapper = new ObjectMapper();
 
+    private final CurrenciesDto currenciesDto = new CurrenciesDto();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String code = req.getPathInfo().replaceAll("/", "");
+
                                                                     // TODO нужно на всех сервлетах сделать валидацию
         List<CurrenciesDto> optionalCurrencies = currencyService.findByCode(code);
         mapper.writeValue(resp.getWriter(), optionalCurrencies);

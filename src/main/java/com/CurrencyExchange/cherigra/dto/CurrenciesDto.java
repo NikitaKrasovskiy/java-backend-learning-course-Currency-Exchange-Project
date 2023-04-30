@@ -20,6 +20,10 @@ public class CurrenciesDto {  // TODO рефактор lombok
 		this.fullName = fullName;
 		this.sign = sign;
 	}
+
+	public CurrenciesDto(String code) {
+		this.code = code;
+	}
 	public CurrenciesDto() {
 
 	}
