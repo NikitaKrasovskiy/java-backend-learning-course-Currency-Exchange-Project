@@ -4,6 +4,8 @@ import com.CurrencyExchange.cherigra.dao.CurrenciesDao;
 import com.CurrencyExchange.cherigra.dto.CurrenciesDto;
 import com.CurrencyExchange.cherigra.entity.Currencies;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +19,7 @@ public class CurrenciesService {
 	
 	public CurrenciesService() {
 	}
-	public List<CurrenciesDto> findAll() {
+	public List<CurrenciesDto> findAll() throws SQLException {
 		return currenciesDao.findAll().stream()
 				.map(currencies -> new CurrenciesDto(
 						currencies.getId(),
@@ -37,8 +39,8 @@ public class CurrenciesService {
 				)).collect(toList());
 	}
 
-	public Integer save(String code, String fullName, String sign) { // TODO сервисы долны возращать только DTO или Model
-		var currencies = new Currencies(code, fullName, sign);
+	public Integer save(CurrenciesDto currenciesDto) throws SQLException { // TODO сервисы долны возращать только DTO или Model
+		var currencies = new Currencies(currenciesDto.getCode(), currenciesDto.getFullName(), currenciesDto.getSign());
 		currenciesDao.save(currencies);
 		return currencies.getId();
 	}

@@ -52,7 +52,7 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 			""";
 
 	@Override
-	public List<Currencies> findAll() {
+	public List<Currencies> findAll() throws SQLException {
 		try (var connection = ConnectionManager.get();
 			 var prepareStatement = connection.prepareStatement(FIND_ALL)) {
 			var resultSet = prepareStatement.executeQuery();
@@ -61,8 +61,6 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 				currencies.add(buildFlight(resultSet));
 			}
 			return currencies;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
 		}
 	}
 	
@@ -107,7 +105,7 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 		}
 	}
 	@Override
-	public Currencies save(Currencies entity) {
+	public Currencies save(Currencies entity) throws SQLException {
 		try (var connection = ConnectionManager.get();
 			 var prepareStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -122,8 +120,6 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 				entity.setId(generatedKeys.getInt("id"));
 			}
 			return entity;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
 		}
 	}
 	public Optional<Currencies> findByCode(String code) {
