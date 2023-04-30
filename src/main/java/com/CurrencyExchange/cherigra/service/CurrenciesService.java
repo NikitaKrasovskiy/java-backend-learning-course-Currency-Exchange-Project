@@ -5,7 +5,6 @@ import com.CurrencyExchange.cherigra.dto.CurrenciesDto;
 import com.CurrencyExchange.cherigra.entity.Currencies;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +36,17 @@ public class CurrenciesService {
 						currencies.getFullName(),
 						currencies.getSign()
 				)).collect(toList());
+	}
+
+	public Optional<Currencies> findByCode(CurrenciesDto currenciesDto) {
+		return currenciesDao.findByCode(currenciesDto.getCode());
+//				.stream()
+//				.map(currencies -> new CurrenciesDto(
+//						currencies.getId(),
+//						currencies.getCode(),
+//						currencies.getFullName(),
+//						currencies.getSign()
+//				)).collect(toList());
 	}
 
 	public Integer save(CurrenciesDto currenciesDto) throws SQLException { // TODO сервисы долны возращать только DTO или Model

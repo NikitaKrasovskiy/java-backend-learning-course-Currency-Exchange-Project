@@ -39,6 +39,10 @@ public class CurrenciesServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Веденны не все нужные данные");
             return;
         }
+        if (currenciesService.findByCode(currenciesDto).isPresent()) {
+            resp.sendError(HttpServletResponse.SC_CONFLICT, "Currency code must be in ISO 4217 format");
+            return;
+        }
         try {
             Integer id = currenciesService.save(currenciesDto);
             List<CurrenciesDto> optionalCurrencies = currenciesService.findById(id);
@@ -46,7 +50,6 @@ public class CurrenciesServlet extends HttpServlet {
         } catch (SQLException e) {
             if (e.getSQLState().equals(INTEGRITY_CONSTRAINT_VIOLATION_CODE))
                 resp.sendError(HttpServletResponse.SC_CONFLICT, e.getMessage());
-
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something happened with the database, try again later!");
         }
     }
