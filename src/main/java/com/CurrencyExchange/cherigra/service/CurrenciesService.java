@@ -38,7 +38,7 @@ public class CurrenciesService {
 				)).collect(toList());
 	}
 
-	public Optional<Currencies> findByCode(CurrenciesDto currenciesDto) {
+	public Optional<Currencies> findByCode(CurrenciesDto currenciesDto) throws SQLException {
 		return currenciesDao.findByCode(currenciesDto.getCode());
 //				.stream()
 //				.map(currencies -> new CurrenciesDto(

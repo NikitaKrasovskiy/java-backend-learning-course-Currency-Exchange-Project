@@ -6,6 +6,7 @@ import com.CurrencyExchange.cherigra.dto.ExchangeRatesDto;
 import com.CurrencyExchange.cherigra.entity.ExchangeRates;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -37,7 +38,7 @@ public class ExchangeRatesService {
                         exchangeRates.getRate()
                 )).collect(toList());
     }
-    public Integer savee(String baseCurrencyCode, String targetCurrencyCode, String rate) { // TODO сервисы долны возращать только DTO или Model
+    public Integer savee(String baseCurrencyCode, String targetCurrencyCode, String rate) throws SQLException { // TODO сервисы долны возращать только DTO или Model
         BigDecimal rates = BigDecimal.valueOf(Double.parseDouble(rate)); // TODO рефактор в функциональном ввиде
         ExchangeRates exchangeRates = new ExchangeRates(
                 currenciesDao.findByCode(targetCurrencyCode).orElseThrow(),

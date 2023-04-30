@@ -122,7 +122,7 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 			return entity;
 		}
 	}
-	public Optional<Currencies> findByCode(String code) {
+	public Optional<Currencies> findByCode(String code) throws SQLException {
 		try (var connection = ConnectionManager.get();
 			 var prepareStatement = connection.prepareStatement(FIND_BY_CODE_SQL)) {
 			prepareStatement.setObject(1, code);
@@ -139,8 +139,6 @@ public class CurrenciesDao implements Dao<Integer, Currencies>{
 				);
 			}
 			return Optional.ofNullable(currencies);
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
 		}
 	}
 	

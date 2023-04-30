@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/exchangeRates")
@@ -33,10 +34,13 @@ public class ExchangeRatesServlet extends HttpServlet {
         resp.setContentType("text/json");
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
-        var id = exchangeRatesService.savee(baseCurrencyCode, targetCurrencyCode, rate);
+        try {
+            Integer id = exchangeRatesService.savee(baseCurrencyCode, targetCurrencyCode, rate);
+            var exchangeList = exchangeRatesService.findById(id);
 
-        var exchangeList = exchangeRatesService.findById(id);
-
-        mapper.writeValue(resp.getWriter(), exchangeList);
+            mapper.writeValue(resp.getWriter(), exchangeList);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
