@@ -33,7 +33,6 @@ public class ExchangeRatesServlet extends HttpServlet {
         String rate = req.getParameter("rate");
         resp.setContentType("text/json");
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
-
         try {
             Integer id = exchangeRatesService.savee(baseCurrencyCode, targetCurrencyCode, rate);
             var exchangeList = exchangeRatesService.findById(id);

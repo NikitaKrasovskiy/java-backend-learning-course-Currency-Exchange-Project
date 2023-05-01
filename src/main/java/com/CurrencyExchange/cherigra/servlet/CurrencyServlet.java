@@ -20,14 +20,11 @@ import java.util.Optional;
 public class CurrencyServlet extends HttpServlet {
     private final CurrencyService currencyService = CurrencyService.getInstance();
     private final ObjectMapper mapper = new ObjectMapper();
-
     private final CurrenciesDto currenciesDto = new CurrenciesDto();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         currenciesDto.setCode(req.getPathInfo().replaceAll("/", ""));
         try {
-
             if (currenciesDto.getCode().isEmpty()) {// нечего не введенно
 //                mapper.writeValue(resp.getWriter(), "error");
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

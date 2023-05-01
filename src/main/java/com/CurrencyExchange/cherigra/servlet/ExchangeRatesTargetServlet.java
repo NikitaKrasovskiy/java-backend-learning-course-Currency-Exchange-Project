@@ -18,11 +18,8 @@ import java.util.List;
 
 @WebServlet("/exchangeRates/*")
 public class ExchangeRatesTargetServlet  extends HttpServlet {
-
     private final ExchangeRatesTargetService exchangeRatesTargetService = ExchangeRatesTargetService.getInstance();
-
     private final ObjectMapper mapper = new ObjectMapper();
-
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getMethod().equalsIgnoreCase("PATCH")) {
@@ -31,7 +28,6 @@ public class ExchangeRatesTargetServlet  extends HttpServlet {
             super.service(req, resp);
         }
     }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getPathInfo().replaceAll("/", "");
@@ -40,7 +36,6 @@ public class ExchangeRatesTargetServlet  extends HttpServlet {
         var  byCodes = exchangeRatesTargetService.findByCodes(baseCurrencyCode, targetCurrencyCode);
         mapper.writeValue(resp.getWriter(), byCodes);
     }
-
     private void doPatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String url = req.getPathInfo().replaceAll("/", ""); // TODO нужен рефактор кода !!!!
         String parameter = req.getReader().readLine();

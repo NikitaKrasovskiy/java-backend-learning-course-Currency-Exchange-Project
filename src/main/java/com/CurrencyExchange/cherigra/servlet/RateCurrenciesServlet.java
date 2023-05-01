@@ -17,17 +17,13 @@ import java.sql.SQLException;
 
 @WebServlet("/exchange")
 public class RateCurrenciesServlet extends HttpServlet {
-
     private final RateCurrenciesService exchangeRatesTargetService = RateCurrenciesService.getInstance();
-
     private final ObjectMapper mapper = new ObjectMapper();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String baseCurrencyCode = req.getParameter("from");
         String targetCurrencyCode = req.getParameter("to");
         String amountToConvertParam = req.getParameter("amount");
-
-
         try {
             ExchangeRatesDto amounts = exchangeRatesTargetService.findAmounts(baseCurrencyCode, targetCurrencyCode, amountToConvertParam);
             mapper.writeValue(resp.getWriter(), amounts);
