@@ -10,15 +10,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-
 public class ExchangeRatesService {
-
     private static final ExchangeRatesService INSTANCE = new ExchangeRatesService();
-
     private final ExchangeRatesDao exchangeRatesDao = ExchangeRatesDao.getInstance();
-
     private final CurrenciesDao currenciesDao = new CurrenciesDao();
-
     public List<ExchangeRatesDto> findAll() {
         return exchangeRatesDao.findAll().stream()
                 .map(exchangeRates -> new ExchangeRatesDto(
@@ -28,7 +23,6 @@ public class ExchangeRatesService {
                         exchangeRates.getRate()
                 )).collect(toList());
     }
-
     public List<ExchangeRatesDto> findById(Integer id) {
         return exchangeRatesDao.findById(id).stream()
                 .map(exchangeRates -> new ExchangeRatesDto(
