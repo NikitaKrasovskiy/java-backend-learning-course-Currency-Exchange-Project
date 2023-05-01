@@ -44,10 +44,6 @@ public class CurrenciesServlet extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_CONFLICT, "Currency code must be in ISO 4217 format");
                 return;
             }
-            if (currenciesService.findByCode(currenciesDto).isPresent()) {
-                resp.sendError(HttpServletResponse.SC_CONFLICT, "Currency code must be in ISO 4217 format");
-                return;
-            }
             Integer id = currenciesService.save(currenciesDto);
             List<CurrenciesDto> optionalCurrencies = currenciesService.findById(id);
             mapper.writeValue(resp.getWriter(), optionalCurrencies);
