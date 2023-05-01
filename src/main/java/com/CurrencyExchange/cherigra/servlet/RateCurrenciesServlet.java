@@ -1,6 +1,7 @@
 package com.CurrencyExchange.cherigra.servlet;
 
 import com.CurrencyExchange.cherigra.dto.ExchangeRatesDto;
+import com.CurrencyExchange.cherigra.dto.RateCurrenciesServletDto;
 import com.CurrencyExchange.cherigra.service.ExchangeRatesTargetService;
 import com.CurrencyExchange.cherigra.service.RateCurrenciesService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +26,7 @@ public class RateCurrenciesServlet extends HttpServlet {
         String targetCurrencyCode = req.getParameter("to");
         String amountToConvertParam = req.getParameter("amount");
         try {
-            ExchangeRatesDto amounts = exchangeRatesTargetService.findAmounts(baseCurrencyCode, targetCurrencyCode, amountToConvertParam);
+            RateCurrenciesServletDto amounts = exchangeRatesTargetService.findAmounts(baseCurrencyCode, targetCurrencyCode, amountToConvertParam);
             mapper.writeValue(resp.getWriter(), amounts);
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -3,6 +3,7 @@ package com.CurrencyExchange.cherigra.service;
 import com.CurrencyExchange.cherigra.dao.CurrenciesDao;
 import com.CurrencyExchange.cherigra.dao.ExchangeRatesDao;
 import com.CurrencyExchange.cherigra.dto.ExchangeRatesDto;
+import com.CurrencyExchange.cherigra.dto.RateCurrenciesServletDto;
 import com.CurrencyExchange.cherigra.entity.ExchangeRates;
 
 import java.math.BigDecimal;
@@ -18,21 +19,20 @@ public class RateCurrenciesService { // TODO  переделать !!!
 
     private final ExchangeRatesDao exchangeRatesDao = ExchangeRatesDao.getInstance();
 
-    public ExchangeRatesDto findAmounts(String baseCode, String targetCode, String amount) throws SQLException {
+    public RateCurrenciesServletDto findAmounts(String baseCode, String targetCode, String amount) throws SQLException {
         ExchangeRates exchangeRates = getExchangeRate(baseCode, targetCode).orElseThrow();
 
         var BigDecimalAmount = BigDecimal.valueOf(Double.parseDouble(amount));
 
         BigDecimal convertedAmount = BigDecimalAmount.multiply(exchangeRates.getRate());
 
-//        return new ExchangeRatesDto(
-//                exchangeRates.getBaseCurrencyId(),
-//                exchangeRates.getTargetCurrencyId(),
-//                exchangeRates.getRate(),
-//                BigDecimalAmount,
-//                convertedAmount
-//        );
-        return null;
+        return new RateCurrenciesServletDto(
+                exchangeRates.getBaseCurrencyId(),
+                exchangeRates.getTargetCurrencyId(),
+                exchangeRates.getRate(),
+                BigDecimalAmount,
+                convertedAmount
+        );
     }
 
     private Optional<ExchangeRates> getExchangeRate(String baseCurrencyCode, String targetCurrencyCode) throws SQLException {
