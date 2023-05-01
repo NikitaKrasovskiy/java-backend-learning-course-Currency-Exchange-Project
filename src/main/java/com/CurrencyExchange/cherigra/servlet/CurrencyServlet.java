@@ -30,15 +30,21 @@ public class CurrencyServlet extends HttpServlet {
 
             if (currenciesDto.getCode().isEmpty()) {// нечего не введенно
 //                mapper.writeValue(resp.getWriter(), "error");
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "нечего не введенно");
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                mapper.writeValue(resp.getWriter(),"нечего не введенно");
+//                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "нечего не введенно");
             }
             var optionalCurrencies = currencyService.findByCode(currenciesDto);
             if (optionalCurrencies.isEmpty()) {// нет такой валюты
-                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "валюта не найдена!");
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                mapper.writeValue(resp.getWriter()," нет такой валюты");
+//                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "валюта не найдена!");
             }
             mapper.writeValue(resp.getWriter(), optionalCurrencies);
         } catch (SQLException e) {
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something happened with the database, try again later!");
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            mapper.writeValue(resp.getWriter(),"Something happened with the database, try again later!");
+//            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something happened with the database, try again later!");
         }
     }
 }
