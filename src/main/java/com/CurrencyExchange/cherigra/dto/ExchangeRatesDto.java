@@ -10,9 +10,9 @@ public class ExchangeRatesDto { // TODO рефактор lombok
     private Currencies targetCurrencyId;
     private BigDecimal rate;
 
-    private BigDecimal amount;
-
-    private BigDecimal convertedAmount;
+//    private BigDecimal amount;
+//
+//    private BigDecimal convertedAmount;
 
     public ExchangeRatesDto(Integer id, Currencies baseCurrencyId, Currencies targetCurrencyId, BigDecimal rate) {
         this.id = id;
@@ -21,12 +21,12 @@ public class ExchangeRatesDto { // TODO рефактор lombok
         this.rate = rate;
     }
 
-    public ExchangeRatesDto(Currencies baseCurrencyId, Currencies targetCurrencyId, BigDecimal rate, BigDecimal amount, BigDecimal convertedAmount) {
+    public ExchangeRatesDto(Currencies baseCurrencyId, Currencies targetCurrencyId, BigDecimal rate) {  //BigDecimal amount, BigDecimal convertedAmount) {
         this.baseCurrencyId = baseCurrencyId;
         this.targetCurrencyId = targetCurrencyId;
         this.rate = rate;
-        this.amount = amount;
-        this.convertedAmount = convertedAmount;
+//        this.amount = amount;
+//        this.convertedAmount = convertedAmount;
     }
 
     ExchangeRatesDto() {
@@ -74,19 +74,19 @@ public class ExchangeRatesDto { // TODO рефактор lombok
         this.rate = rate;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public BigDecimal getConvertedAmount() {
-        return convertedAmount;
-    }
-
-    public void setConvertedAmount(BigDecimal convertedAmount) {
-        this.convertedAmount = convertedAmount;
-    }
+//    public BigDecimal getAmount() {
+//        return amount;
+//    }
+//
+//    public void setAmount(BigDecimal amount) {
+//        this.amount = amount;
+//    }
+//
+//    public BigDecimal getConvertedAmount() {
+//        return convertedAmount;
+//    }
+//
+//    public void setConvertedAmount(BigDecimal convertedAmount) {
+//        this.convertedAmount = convertedAmount;
+//    }
 }

@@ -25,13 +25,14 @@ public class RateCurrenciesService { // TODO  переделать !!!
 
         BigDecimal convertedAmount = BigDecimalAmount.multiply(exchangeRates.getRate());
 
-        return new ExchangeRatesDto(
-                exchangeRates.getBaseCurrencyId(),
-                exchangeRates.getTargetCurrencyId(),
-                exchangeRates.getRate(),
-                BigDecimalAmount,
-                convertedAmount
-        );
+//        return new ExchangeRatesDto(
+//                exchangeRates.getBaseCurrencyId(),
+//                exchangeRates.getTargetCurrencyId(),
+//                exchangeRates.getRate(),
+//                BigDecimalAmount,
+//                convertedAmount
+//        );
+        return null;
     }
 
     private Optional<ExchangeRates> getExchangeRate(String baseCurrencyCode, String targetCurrencyCode) throws SQLException {
