@@ -26,7 +26,7 @@ public class RateCurrenciesServlet extends HttpServlet {
         String targetCurrencyCode = req.getParameter("to");
         String amountToConvertParam = req.getParameter("amount");
         try {
-            RateCurrenciesServletDto amounts = exchangeRatesTargetService.findAmounts(baseCurrencyCode, targetCurrencyCode, amountToConvertParam);
+            var amounts = exchangeRatesTargetService.findAmounts(baseCurrencyCode, targetCurrencyCode, amountToConvertParam);
             mapper.writeValue(resp.getWriter(), amounts);
         } catch (SQLException e) {
             throw new RuntimeException(e);

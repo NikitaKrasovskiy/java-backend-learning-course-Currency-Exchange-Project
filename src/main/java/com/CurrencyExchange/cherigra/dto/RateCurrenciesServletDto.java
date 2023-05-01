@@ -20,6 +20,10 @@ public class RateCurrenciesServletDto {
         this.convertedAmount = convertedAmount;
     }
 
+    RateCurrenciesServletDto() {
+
+    }
+
     public Currencies getBaseCurrencyId() {
         return baseCurrencyId;
     }

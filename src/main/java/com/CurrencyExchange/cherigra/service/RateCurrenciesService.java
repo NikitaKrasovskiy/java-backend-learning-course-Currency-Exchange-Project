@@ -20,11 +20,12 @@ public class RateCurrenciesService { // TODO  переделать !!!
     private final ExchangeRatesDao exchangeRatesDao = ExchangeRatesDao.getInstance();
 
     public RateCurrenciesServletDto findAmounts(String baseCode, String targetCode, String amount) throws SQLException {
-        ExchangeRates exchangeRates = getExchangeRate(baseCode, targetCode).orElseThrow();
+
+        var exchangeRates = getExchangeRate(baseCode, targetCode).orElseThrow();
 
         var BigDecimalAmount = BigDecimal.valueOf(Double.parseDouble(amount));
 
-        BigDecimal convertedAmount = BigDecimalAmount.multiply(exchangeRates.getRate());
+        var convertedAmount = BigDecimalAmount.multiply(exchangeRates.getRate());
 
         return new RateCurrenciesServletDto(
                 exchangeRates.getBaseCurrencyId(),
@@ -63,7 +64,7 @@ public class RateCurrenciesService { // TODO  переделать !!!
         return Optional.of(exchangeRates1);
     }
 
-    private Optional<ExchangeRates> getCrossExchangeRate(String baseCurrencyCode, String targetCurrencyCode) throws SQLException {
+    private Optional<ExchangeRates> getCrossExchangeRate(String baseCurrencyCode, String targetCurrencyCode) {
         var exchangeRatesDaoAmount = exchangeRatesDao.findAmount(baseCurrencyCode, targetCurrencyCode);
 
         if (exchangeRatesDaoAmount.size() != 2) {
